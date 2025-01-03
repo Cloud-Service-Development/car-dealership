@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.car_dealership.model;
 
 import jakarta.persistence.*;
 
@@ -14,19 +14,16 @@ public class User {
     private String password; // Θα είναι hashed
     private String email;
 
-    @Enumerated
-    private String role; // Customer, Admin, Dealership
+    @Enumerated(EnumType.STRING)
+    private UserRole role; // Customer, Admin, Dealership
 
     public static ConnectionBuilder withUsername(String admin) {
         return null;
     }
 
-    // Getters και Setters
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public enum UserRole {
+        ADMIN,
+        CUSTOMER,
+        DEALERSHIP
     }
 }

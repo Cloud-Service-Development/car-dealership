@@ -1,9 +1,11 @@
-package com.example.controller;
+package com.example.car_dealership.controller;
 
-import com.example.model.User;
-import com.example.service.UserService;
+import com.example.car_dealership.model.User;
+import com.example.car_dealership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -13,9 +15,16 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/test")
+    @GetMapping("/start")
     public String testEndpoint(){
+
         return "Hello World";
+    }
+    // Παράδειγμα: GET /users
+    @GetMapping
+    public List<User> getAllUsers() {
+        // Επιστροφή λίστας χρηστών
+        return userService.findAll();
     }
 
     @PostMapping

@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.car_dealership.model;
 
 import jakarta.persistence.*;
 import java.util.*;

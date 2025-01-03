@@ -1,6 +1,5 @@
-package com.example.model;
+package com.example.car_dealership.model;
 
-import com.example.model.Appointment;
 import jakarta.persistence.*;
 import java.util.List;
 
