@@ -4,23 +4,24 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("DealerShip")
-public class DealerShip extends User {
+@DiscriminatorValue("Citizen")
+public class Citizen extends User {
 
     private String name;
     private String location;
     private String contacting;
 
-    // Παράδειγμα OneToMany: ένα DealerShip μπορεί να έχει πολλά Cars
-    @OneToMany(mappedBy="dealerShip", cascade = CascadeType.ALL)
-    private List<Car> cars;
+    // Παράδειγμα OneToMany: ένας Citizen μπορεί να έχει πολλά Appointments
+    @OneToMany(mappedBy="citizen", cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
 
-    public DealerShip() {
+    // -- Constructors
+    public Citizen() {
         super();
     }
 
-    public DealerShip(String email, String password, String username,
-                      String name, String location, String contacting) {
+    public Citizen(String email, String password, String username,
+                   String name, String location, String contacting) {
         super(email, password, username);
         this.name = name;
         this.location = location;
@@ -37,8 +38,8 @@ public class DealerShip extends User {
     public String getContacting() { return contacting; }
     public void setContacting(String contacting) { this.contacting = contacting; }
 
-    public List<Car> getCars() { return cars; }
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
+    public List<Appointment> getAppointments() { return appointments; }
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 }

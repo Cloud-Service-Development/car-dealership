@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -21,7 +20,7 @@ public class UserController {
         return "Hello World";
     }
     // Παράδειγμα: GET /users
-    @GetMapping
+    @GetMapping("/users")
     public List<User> getAllUsers() {
         // Επιστροφή λίστας χρηστών
         return userService.findAll();
