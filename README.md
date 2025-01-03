@@ -1,108 +1,120 @@
-Ακολουθεί ένα παράδειγμα αρχείου README.md για την εφαρμογή σας. Το αρχείο αυτό περιλαμβάνει όλες τις βασικές πληροφορίες που χρειάζεται κάποιος χρήστης ή προγραμματιστής για να κατανοήσει το έργο και να το εκτελέσει σωστά.
+ReadMe για την Εφαρμογή Αντιπροσωπείας Αυτοκινήτων
 
-# Car Dealership Application
+Περιγραφή Έργου
 
-Αυτή είναι μια εφαρμογή για μια αντιπροσωπεία αυτοκινήτων, η οποία σας επιτρέπει να δημιουργήσετε και να διαχειριστείτε χρήστες μέσω ενός RESTful API.
+Η παρούσα εφαρμογή αποτελεί μια αρχική υλοποίηση ενός συστήματος αντιπροσωπείας αυτοκινήτων με χρήση Spring Boot και κληρονομικότητα στις κλάσεις User, Citizen και Dealership. Περιλαμβάνει μόνο μια βασική λειτουργία: το endpoint /test για επιβεβαίωση της λειτουργίας της εφαρμογής.
 
-## Περιγραφή
+Τεχνολογίες
+	•	Java 17
+	•	Spring Boot 3.4.0
+	•	Spring Data JPA
+	•	MySQL
+	•	Hibernate
 
-Η εφαρμογή δημιουργήθηκε με τη χρήση του Spring Boot, για να παρέχει μια απλή διεπαφή REST API για τη διαχείριση χρηστών σε μια βάση δεδομένων MySQL. Περιλαμβάνει βασικές λειτουργίες όπως:
+Δομή Βάσης Δεδομένων
 
-- Δημιουργία νέου χρήστη μέσω του API.
-- Εμφάνιση όλων των χρηστών.
-- Δοκιμή σύνδεσης API με ένα βασικό endpoint.
+Η βάση δεδομένων χρησιμοποιεί τη στρατηγική Single Table Inheritance για την κλάση User, με τις Citizen και Dealership να είναι υποκλάσεις.
 
-## Τεχνολογίες
+Σχήμα   Πίνακα    User:
 
-- **Spring Boot**: Framework για τη δημιουργία εφαρμογών Java.
-- **MySQL**: Σύστημα διαχείρισης βάσης δεδομένων.
-- **HikariCP**: Σύνδεση με τη βάση δεδομένων για τη διαχείριση της σύνδεσης.
-- **Spring Data JPA**: Για την αλληλεπίδραση με τη βάση δεδομένων.
-- **Postman**: Χρησιμοποιήθηκε για να ελέγξουμε τα API endpoints.
-  
-## Απαιτήσεις
+Όνομα  Στήλης	Τύπος Δεδομένων	Περιγραφή
+id	        BIGINT	       Πρωτεύον Κλειδί
+username        VARCHAR	       Όνομα χρήστη
+password        VARCHAR	       Κρυπτογραφημένος κωδικός
+email	        VARCHAR	       Email χρήστη
+dtype	        VARCHAR	       Διακριτής τύπος για τις υποκλάσεις
+location	VARCHAR	       Τοποθεσία (ειδικό για Dealership)
+contact_info	VARCHAR	       Πληροφορίες επικοινωνίας
+name	        VARCHAR	        Όνομα αντιπροσωπείας
 
-1. **JDK 17+**: Πρέπει να έχετε εγκαταστήσει την τελευταία έκδοση του JDK 17 (ή νεότερη).
-2. **Maven**: Διαχειριστής εξαρτήσεων και build tool.
-3. **MySQL**: Βάση δεδομένων για την αποθήκευση των χρηστών.
-4. **IntelliJ IDEA ή άλλο IDE**: Για να αναπτύξετε και να εκτελέσετε το έργο.
+Δομή Κλάσεων
+1.	User (Βασική Κλάση)
 
-## Ρύθμιση
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
+public abstract class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-### 1. Κλωνοποιήστε το Repository
+    private String username;
+    private String password;
+    private String email;
 
-```bash
-git clone https://github.com/username/car-dealership.git
+    // Getters και Setters
+}
+
+2.	Citizen (Υποκλάση)
+
+@Entity
+@DiscriminatorValue("Citizen")
+public class Citizen extends User {
+    // Πρόσθετα πεδία για τον Citizen
+}
+
+3.	Dealership (Υποκλάση)
+
+@Entity
+@DiscriminatorValue("Dealership")
+public class Dealership extends User {
+    private String location;
+    private String contactInfo;
+    private String name;
+
+    // Getters και Setters
+}
+
+Λειτουργικότητα
+
+Endpoint: /test
+	•	HTTP Μέθοδος: GET
+	•	Περιγραφή: Ένα απλό endpoint για να επιβεβαιωθεί ότι η εφαρμογή λειτουργεί σωστά.
+	•	Απάντηση: "Hello, World!"
+
+Controller:
+
+@RestController
+@RequestMapping("/test")
+public class TestController {
+    @GetMapping
+    public String test() {
+        return "Hello, World!";
+    }
+}
+
+Βήματα Εκτέλεσης
+1.	Κλωνοποίηση του Αποθετηρίου:
+
+git clone <repository-url>
 cd car-dealership
 
-2. Ρυθμίστε τη Βάση Δεδομένων
 
-Ακολουθήστε τα βήματα για να δημιουργήσετε τη βάση δεδομένων στον MySQL:
-	1.	Στην κονσόλα MySQL, δημιουργήστε τη βάση δεδομένων:
-
-CREATE DATABASE car_dealership;
-
-
-	2.	Ρυθμίστε το αρχείο application.properties με τις σωστές ρυθμίσεις για τη σύνδεση στη βάση δεδομένων:
+2.	Ρύθμιση της Βάσης Δεδομένων:
+	•	Δημιουργήστε μια βάση δεδομένων MySQL με όνομα car_dealership.
+	•	Προσθέστε τα παρακάτω στο αρχείο application.properties:
 
 spring.datasource.url=jdbc:mysql://localhost:3306/car_dealership
 spring.datasource.username=root
 spring.datasource.password=
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 
 
-
-3. Εκτελέστε την Εφαρμογή
-
-Χρησιμοποιήστε το Maven για να εκτελέσετε την εφαρμογή:
+3.	Εκτέλεση της Εφαρμογής:
 
 mvn spring-boot:run
 
-Αυτό θα ξεκινήσει την εφαρμογή στην προεπιλεγμένη θύρα 8080.
 
-4. Δοκιμάστε τα Endpoints
+4.	Δοκιμή της Εφαρμογής:
+	•	Ανοίξτε τον browser ή το Postman και κάντε GET request στο:
 
-Μπορείτε να δοκιμάσετε τα endpoints της εφαρμογής χρησιμοποιώντας το Postman:
+http://localhost:8080/users/test
 
-GET /users/test
+Μελλοντικές Βελτιώσεις
+	•	Επέκταση λειτουργικότητας, όπως:
+	•	Εγγραφή Citizen και Dealership.
+	•	Προσθήκη αυτοκινήτων.
+	•	Αναζήτηση αυτοκινήτων.
+	•	Κράτηση test drives.
 
-Αυτό το endpoint επιστρέφει ένα απλό μήνυμα “Hello World”.
-
-POST /users
-
-Αυτό το endpoint δημιουργεί έναν νέο χρήστη. Στείλτε ένα JSON αίτημα:
-
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-
-GET /users
-
-Αυτό το endpoint επιστρέφει όλους τους χρήστες που είναι αποθηκευμένοι στη βάση δεδομένων.
-
-Δοκιμές
-
-Μπορείτε να γράψετε και να εκτελέσετε δοκιμές χρησιμοποιώντας το JUnit ή το ενσωματωμένο σύστημα δοκιμών του Spring Boot για να εξασφαλίσετε τη σωστή λειτουργία των endpoints και της βάσης δεδομένων.
-
-Προβλήματα και Βελτιώσεις
-
-Αν βρείτε κάποιο πρόβλημα ή αν έχετε προτάσεις για βελτιώσεις, παρακαλώ ανοίξτε ένα issue στο GitHub repository.
-
-Άδεια
-
-Αυτή η εφαρμογή διατίθεται με την άδεια MIT License.
-
-### Επεξήγηση του Περιεχομένου:
-1. **Περιγραφή**: Εξηγεί τη λειτουργικότητα της εφαρμογής και τις βασικές της δυνατότητες.
-2. **Τεχνολογίες**: Περιγράφει τις τεχνολογίες που χρησιμοποιούνται για την υλοποίηση της εφαρμογής.
-3. **Απαιτήσεις**: Παρουσιάζει τις απαιτούμενες τεχνολογίες που χρειάζονται για την εκτέλεση του έργου.
-4. **Ρύθμιση**: Σας καθοδηγεί βήμα προς βήμα για την εγκατάσταση και εκτέλεση της εφαρμογής.
-5. **Δοκιμές**: Δίνει οδηγίες για τη δοκιμή των API endpoints.
-6. **Άδεια**: Προσδιορίζει την άδεια του έργου (στην περίπτωση αυτή χρησιμοποιείται η άδεια MIT).
-
-Αυτό το `README.md` παρέχει όλες τις απαραίτητες πληροφορίες για να μπορεί κάποιος άλλος χρήστης να καταλάβει και να χρησιμοποιήσει την εφαρμογή σας.
+Το ReadMe αυτό εξηγεί την τρέχουσα κατάσταση της εφαρμογής και χρησιμεύει ως βάση για μελλοντικές επεκτάσεις.
