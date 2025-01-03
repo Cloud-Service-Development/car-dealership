@@ -36,54 +36,54 @@
 		<artifactId>spring-boot-starter-data-jpa</artifactId>
 	  </dependency>
 	<!--Spring Security for auth-->
-		<dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-starter-security</artifactId>
-         </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-	    <!--Web gia REST APIs-->
-	   <dependency>
+	  <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-security</artifactId>
+      </dependency>
+	  <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter</artifactId>
+	  </dependency>
+	<!--Web gia REST APIs-->
+	  <dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
-	   </dependency>
-	   <!--DevTools for easy development-->
-	   <dependency>
-		 <groupId>org.springframework.boot</groupId>
-		 <artifactId>spring-boot-devtools</artifactId>
-		 <scope>runtime</scope>
-		 <optional>true</optional>
-	   </dependency>
-	   <!--MySQL Driver-->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version> <!-- ή η τελευταία έκδοση -->
-		</dependency>
-	   <dependency>
-		  <groupId>com.mysql</groupId>
-		  <artifactId>mysql-connector-j</artifactId>
-		  <scope>runtime</scope>
-	   </dependency>
-	   <!--Lombok for boilerplate code-->
-	   <dependency>
-		  <groupId>org.projectlombok</groupId>
-		  <artifactId>lombok</artifactId>
-		   <optional>true</optional>
-	   </dependency>
-	   <!--Test Dependencies-->
-	   <dependency>
-		   <groupId>org.springframework.boot</groupId>
-		   <artifactId>spring-boot-starter-test</artifactId>
-		   <scope>test</scope>
-	   </dependency>
-	   <dependency>
-		   <groupId>org.springframework.security</groupId>
-		   <artifactId>spring-security-test</artifactId>
-		   <scope>test</scope>
-	    </dependency>
+	  </dependency>
+	<!--DevTools for easy development-->
+	  <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-devtools</artifactId>
+		<scope>runtime</scope>
+		<optional>true</optional>
+	  </dependency>
+	<!--MySQL Driver-->
+	  <dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>8.0.33</version> <!-- ή η τελευταία έκδοση -->
+	  </dependency>
+	  <dependency>
+		<groupId>com.mysql</groupId>
+		<artifactId>mysql-connector-j</artifactId>
+		<scope>runtime</scope>
+	  </dependency>
+	<!--Lombok for boilerplate code-->
+	  <dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<optional>true</optional>
+	  </dependency>
+	<!--Test Dependencies-->
+	  <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
+	  </dependency>
+	  <dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-test</artifactId>
+		<scope>test</scope>
+	  </dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -91,11 +91,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</path>
+				<annotationProcessorPaths>
+					<path>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+					</path>
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
@@ -103,12 +103,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
+				<excludes>
+					<exclude>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+					</exclude>
+				</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

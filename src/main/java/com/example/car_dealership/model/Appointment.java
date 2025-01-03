@@ -9,7 +9,6 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime appointmentDate;
     private String status;
 
@@ -18,6 +17,7 @@ public class Appointment {
     @JoinColumn(name = "citizen_id")
     private Citizen citizen;
 
+    //-- Constructors
     public Appointment() {}
 
     public Appointment(LocalDateTime appointmentDate, String status, Citizen citizen) {
@@ -28,10 +28,14 @@ public class Appointment {
 
     // -- Getters & Setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id;}
+
     public LocalDateTime getAppointmentDate() { return appointmentDate; }
     public void setAppointmentDate(LocalDateTime appointmentDate) { this.appointmentDate = appointmentDate; }
+
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
     public Citizen getCitizen() { return citizen; }
     public void setCitizen(Citizen citizen) { this.citizen = citizen; }
 }

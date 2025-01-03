@@ -15,9 +15,8 @@ public class DealerShip extends User {
     @OneToMany(mappedBy="dealerShip", cascade = CascadeType.ALL)
     private List<Car> cars;
 
-    public DealerShip() {
-        super();
-    }
+    //-- Constructors
+    public DealerShip() {super();}
 
     public DealerShip(String email, String password, String username,
                       String name, String location, String contactInfo) {
@@ -38,7 +37,5 @@ public class DealerShip extends User {
     public void setContactInfo(String contacting) { this.contactInfo = contacting; }
 
     public List<Car> getCars() { return cars; }
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
+    public void setCars(List<Car> cars) {this.cars = cars;}
 }

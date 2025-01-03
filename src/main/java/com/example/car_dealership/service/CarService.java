@@ -7,12 +7,10 @@ import com.example.car_dealership.repository.CarRepository;
 import com.example.car_dealership.repository.DealershipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class CarService {
-
 
     private DealershipRepository dealershipRepository;
     private CarRepository carRepository;
@@ -31,9 +29,9 @@ public class CarService {
     }
 
     public Car addCar(Long dealershipId,Car car) {
-            // Εύρεση της αντιπροσωπείας
+        // Εύρεση της αντιπροσωπείας
         DealerShip dealership = dealershipRepository.findById(dealershipId)
-                    .orElseThrow(() -> new IllegalArgumentException("Dealership not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Dealership not found"));
 
         //Συσχέτιση του αυτοκινήτου με την αντιπροσωπεία
         car.setDealerShip(dealership);

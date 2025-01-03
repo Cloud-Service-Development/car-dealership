@@ -5,11 +5,9 @@ import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.model.User;
 import com.example.car_dealership.repository.CitizenRepository;
 import com.example.car_dealership.repository.DealershipRepository;
-import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.car_dealership.repository.UserRepository;
-
 import java.util.List;
 
 @Service

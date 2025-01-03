@@ -16,9 +16,7 @@ public class Citizen extends User {
     private List<Appointment> appointments;
 
     // -- Constructors
-    public Citizen() {
-        super();
-    }
+    public Citizen() {super();}
 
     public Citizen(String email, String password, String username,
                    String name, String location, String contacting) {
@@ -39,7 +37,5 @@ public class Citizen extends User {
     public void setContacting(String contacting) { this.contacting = contacting; }
 
     public List<Appointment> getAppointments() { return appointments; }
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
+    public void setAppointments(List<Appointment> appointments) {this.appointments = appointments;}
 }

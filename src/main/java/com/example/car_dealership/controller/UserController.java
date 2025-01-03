@@ -7,7 +7,6 @@ import com.example.car_dealership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -21,11 +20,6 @@ public class UserController {
     public String test() {
         return "Hello World";
     }
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        // Επιστροφή λίστας χρηστών
-        return userService.findAll();
-    }
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
@@ -36,21 +30,18 @@ public class UserController {
                     citizen.getUsername(),
                     citizen.getPassword(),
                     citizen.getEmail(),
-                    citizen.getName()
-            );
-            return ResponseEntity.ok(registeredCitizen);
+                    citizen.getName());
+        return ResponseEntity.ok(registeredCitizen);
         }
-
-        @PostMapping("/register/dealership")
-        public ResponseEntity<DealerShip> registerDealership(@RequestBody DealerShip dealership) {
-            DealerShip registeredDealership = userService.registerDealership(
+    @PostMapping("/register/dealership")
+    public ResponseEntity<DealerShip> registerDealership(@RequestBody DealerShip dealership) {
+        DealerShip registeredDealership = userService.registerDealership(
                     dealership.getUsername(),
                     dealership.getPassword(),
                     dealership.getEmail(),
                     dealership.getName(),
                     dealership.getLocation(),
-                    dealership.getContactInfo()
-            );
-            return ResponseEntity.ok(registeredDealership);
-        }
+                    dealership.getContactInfo());
+        return ResponseEntity.ok(registeredDealership);
     }
+}
