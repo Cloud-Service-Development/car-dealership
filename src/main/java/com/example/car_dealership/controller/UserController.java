@@ -17,6 +17,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("test")
+    public String test() {
+        return "Hello World";
+    }
     @GetMapping("/users")
     public List<User> getAllUsers() {
         // Επιστροφή λίστας χρηστών
