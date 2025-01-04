@@ -9,7 +9,6 @@ public class Citizen extends User {
 
     private String name;
     private String location;
-    private String contacting;
 
     // Παράδειγμα OneToMany: ένας Citizen μπορεί να έχει πολλά Appointments
     @OneToMany(mappedBy="citizen", cascade = CascadeType.ALL)
@@ -18,12 +17,11 @@ public class Citizen extends User {
     // -- Constructors
     public Citizen() {super();}
 
-    public Citizen(String email, String password, String username,
-                   String name, String location, String contacting) {
-        super(email, password, username);
+    public Citizen(int afm,String email, String password, String username,String contactInfo,
+                   String name, String location) {
+        super(afm,email, password, username,contactInfo);
         this.name = name;
         this.location = location;
-        this.contacting = contacting;
     }
 
     // -- Getters & Setters
@@ -32,9 +30,6 @@ public class Citizen extends User {
 
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
-
-    public String getContacting() { return contacting; }
-    public void setContacting(String contacting) { this.contacting = contacting; }
 
     public List<Appointment> getAppointments() { return appointments; }
     public void setAppointments(List<Appointment> appointments) {this.appointments = appointments;}

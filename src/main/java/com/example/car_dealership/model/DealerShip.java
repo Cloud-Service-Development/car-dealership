@@ -9,7 +9,6 @@ public class DealerShip extends User {
 
     private String name;
     private String location;
-    private String contactInfo;
 
     // Παράδειγμα OneToMany: ένα DealerShip μπορεί να έχει πολλά Cars
     @OneToMany(mappedBy="dealerShip", cascade = CascadeType.ALL)
@@ -18,12 +17,11 @@ public class DealerShip extends User {
     //-- Constructors
     public DealerShip() {super();}
 
-    public DealerShip(String email, String password, String username,
-                      String name, String location, String contactInfo) {
-        super(email, password, username);
+    public DealerShip(int afm,String email, String password, String username,String contactInfo,
+                      String name, String location) {
+        super(afm,email, password, username,contactInfo);
         this.name = name;
         this.location = location;
-        this.contactInfo= contactInfo;
     }
 
     // -- Getters & Setters
@@ -32,9 +30,6 @@ public class DealerShip extends User {
 
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
-
-    public String getContactInfo() { return contactInfo; }
-    public void setContactInfo(String contacting) { this.contactInfo = contacting; }
 
     public List<Car> getCars() { return cars; }
     public void setCars(List<Car> cars) {this.cars = cars;}
