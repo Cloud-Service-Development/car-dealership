@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Προσθήκη Αυτοκινήτου</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Προσθήκη Αυτοκινήτου</h1>
+    <form id="addCarForm" method="POST">
+      <label for="brand">Μάρκα:</label>
+      <input type="text" id="brand" name="brand" placeholder="Πληκτρολογήστε τη μάρκα" required>
+
+      <label for="model">Μοντέλο:</label>
+      <input type="text" id="model" name="model" placeholder="Πληκτρολογήστε το μοντέλο" required>
+
+      <label for="fuelType">Καύσιμο:</label>
+      <select id="fuelType" name="fuelType" required>
+        <option value="petrol">Βενζίνη</option>
+        <option value="diesel">Πετρέλαιο</option>
+        <option value="electric">Ηλεκτρικό</option>
+      </select>
+
+
+      <label for="thesis">Θέσεις:</label>
+      <input type="number" id="thesis" name="thesis" placeholder="Αριθμός θέσεων" required>
+
+      <label for="price">Τιμή:</label>
+      <input type="number" id="price" name="price" placeholder="Πληκτρολογήστε την τιμή" required>
+
+      <label for="numberOfSameCars">numberOfSameCars:</label>
+      <input type="number" id="numberOfSameCars" name="numberOfSameCars" placeholder="Πληκτρολογήστε τον αριθμό" required>
+
+      <label for="dealershipId">Αντιπροσωπεία ID:</label>
+      <input type="number" id="dealershipId" name="dealershipId" placeholder="ID Αντιπροσωπείας" required>
+
+      <button type="submit"> Προσθήκη Αυτοκινήτου</button>
+     </form>
+     <p id="responseMessage"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
