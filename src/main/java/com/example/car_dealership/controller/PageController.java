@@ -3,6 +3,7 @@ package com.example.car_dealership.controller;
 import com.example.car_dealership.model.Car;
 import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.model.InternalUser;
+import com.example.car_dealership.repository.CarRepository;
 import com.example.car_dealership.repository.DealershipRepository;
 import com.example.car_dealership.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -26,6 +26,9 @@ public class PageController {
 
     @Autowired
     private DealershipRepository dealershipRepository;
+
+    @Autowired
+    private CarRepository carRepository;
 
     @GetMapping("/login")
     public String login() {
@@ -105,13 +108,34 @@ public class PageController {
         }
 
         DealerShip dealership = dealershipRepository.findByUserId(user.get().getId());
+        List<Car> cars = carRepository.findByDealershipId(dealership.getId());
 
         model.addAttribute("currentUsername", username);
         model.addAttribute("role", user.get().getRole());
         model.addAttribute("dealershipId", dealership.getId());
-        model.addAttribute("dealershipCars", dealership.getCars());
+        model.addAttribute("dealershipCars", cars);
 
         return "cars-list-dealership";
+    }
+
+    @GetMapping("/dealership/dashboard/edit-car")
+    public String editCar(@RequestParam int carId, Model model, Principal principal) {
+        Optional<Car> car = carRepository.findById(carId);
+        String username = principal.getName();
+        Optional<InternalUser> user = userRepository.findByUsername(username);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        DealerShip dealership = dealershipRepository.findByUserId(user.get().getId());
+
+        model.addAttribute("currentUsername", username);
+        model.addAttribute("role", user.get().getRole());
+        model.addAttribute("dealershipId", dealership.getId());
+        model.addAttribute("car", car.orElse(null));
+
+        return "add-a-car";
     }
 
     @GetMapping("/customer/dashboard")

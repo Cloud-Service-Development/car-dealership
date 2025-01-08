@@ -32,4 +32,10 @@ public class CarController {
         Car savedCar = carService.addCar(dealershipId, car);
         return ResponseEntity.ok(savedCar);
     }
+
+    @PostMapping("/dealership/dashboard/edit-car")
+    public ResponseEntity<String> editCar(@RequestParam int carId, @RequestBody Car car) {
+        Car updatedcar = carService.editCar(carId, car);
+        return ResponseEntity.ok("The car was updated");
+    }
 }
