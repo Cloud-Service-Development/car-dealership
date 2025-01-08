@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Car Dealership - Dashboard</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
 <nav>
     <a href="/dealership/dashboard"><i class="fa fa-fw fa-home"></i> Home</a>
     <a href="/dealership/dashboard/add-car">Add a car</a>
-    <a href="/dealership/dashboard/cars">Cars</a>
+    <a href="/dealership/dashboard/cars">My Cars</a>
     <a href="/dealership/dashboard">Search</a>
     <a href="/logout">Logout</a>
 </nav>
@@ -23,6 +24,8 @@
     <div class="login-form">
         <h2>Add a new car item in the collection</h2>
         <form id="add-a-car">
+            <input type="text" hidden="hidden" id="dealership-id" name="dealership-id" th:value="${dealershipId}">
+
             <label for="brand">Brand</label>
             <input type="text" id="brand" name="brand" placeholder="Enter a brand (f.e. Toyota)" required>
 
@@ -47,7 +50,7 @@
             <label for="quantity">Quantity</label>
             <input type="number" id="quantity" name="quantity" placeholder="Enter the quantity" required>
 
-            <button type="submit">Submit item</button>
+            <button type="submit">Add the car</button>
         </form>
     </div>
 </div>
@@ -56,3 +59,39 @@
 </footer>
 </body>
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('#add-a-car').submit(function(event) {
+            event.preventDefault();
+
+            var formData = {
+                brand: $('#brand').val(),
+                model: $('#model').val(),
+                fuelType: $('#fuel-type').val(),
+                engine: $('#engine').val(),
+                seats: $('#seats').val(),
+                price: $('#price').val(),
+                additionalInfo: $('#additional-info').val(),
+                stockQuantity: $('#quantity').val(),
+            };
+
+            const dealershipId = $('#dealership-id').val();
+
+            $.ajax({
+                url: `/dealership/dashboard/add-car?dealershipId=${dealershipId}`,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    window.location.href = '/dealership/dashboard/cars';
+                    alert('Car has been added successfully!');
+                },
+                error: function(xhr, status, error) {
+                    window.location.href = '/dealership/dashboard/add-car';
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+</script>

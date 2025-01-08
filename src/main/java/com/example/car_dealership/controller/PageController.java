@@ -1,6 +1,8 @@
 package com.example.car_dealership.controller;
 
+import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.model.InternalUser;
+import com.example.car_dealership.repository.DealershipRepository;
 import com.example.car_dealership.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +19,9 @@ public class PageController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DealershipRepository dealershipRepository;
 
     @GetMapping("/login")
     public String login() {
@@ -77,8 +82,11 @@ public class PageController {
             throw new UsernameNotFoundException(username);
         }
 
+        DealerShip dealership = dealershipRepository.findByUserId(user.get().getId());
+
         model.addAttribute("currentUsername", username);
         model.addAttribute("role", user.get().getRole());
+        model.addAttribute("dealershipId", dealership.getId());
 
         return "add-a-car";
     }
