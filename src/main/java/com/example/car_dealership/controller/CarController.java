@@ -22,7 +22,7 @@ public class CarController {
         return carService.getAllCars();
     }
 
-    @GetMapping("/dealership/dashboard/cars")
+    @PostMapping("/dealership/dashboard/cars")
     public List<Car> getDealershipCars(@RequestParam int dealershipId) {
         return carService.getDealershipCars(dealershipId);
     }

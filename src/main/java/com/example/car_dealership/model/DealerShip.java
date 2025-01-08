@@ -2,6 +2,8 @@ package com.example.car_dealership.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "dealerships")
 public class DealerShip {
@@ -16,6 +18,9 @@ public class DealerShip {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private InternalUser user;
+
+    @OneToMany(mappedBy = "dealership", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Car> cars;
 
     private DealerShip() {}
 
@@ -55,5 +60,13 @@ public class DealerShip {
 
     public void setUser(InternalUser user) {
         this.user = user;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 }

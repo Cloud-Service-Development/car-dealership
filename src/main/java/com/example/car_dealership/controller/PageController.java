@@ -1,5 +1,6 @@
 package com.example.car_dealership.controller;
 
+import com.example.car_dealership.model.Car;
 import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.model.InternalUser;
 import com.example.car_dealership.repository.DealershipRepository;
@@ -9,8 +10,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -89,6 +93,25 @@ public class PageController {
         model.addAttribute("dealershipId", dealership.getId());
 
         return "add-a-car";
+    }
+
+    @GetMapping("/dealership/dashboard/cars")
+    public String cars(Principal principal, Model model) {
+        String username = principal.getName();
+        Optional<InternalUser> user = userRepository.findByUsername(username);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        DealerShip dealership = dealershipRepository.findByUserId(user.get().getId());
+
+        model.addAttribute("currentUsername", username);
+        model.addAttribute("role", user.get().getRole());
+        model.addAttribute("dealershipId", dealership.getId());
+        model.addAttribute("dealershipCars", dealership.getCars());
+
+        return "cars-list-dealership";
     }
 
     @GetMapping("/customer/dashboard")

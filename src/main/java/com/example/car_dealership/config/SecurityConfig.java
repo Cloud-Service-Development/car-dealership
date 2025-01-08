@@ -61,7 +61,8 @@ public class SecurityConfig {
                     // Security scope for the role "dealership"
                     registry.requestMatchers(
                             "/dealership/dashboard",
-                            "/dealership/dashboard/add-a-car"
+                            "/dealership/dashboard/add-a-car",
+                            "/dealership/dashboard/cars"
                     ).hasAnyAuthority("dealership");
                     // Security scope for the role "customer"
                     registry.requestMatchers(

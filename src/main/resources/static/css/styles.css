@@ -3,7 +3,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    overflow: hidden;
 }
 
 body {
@@ -162,3 +161,50 @@ footer {
     overflow: scroll;
     height: 40em;
 }
+
+.car-icon-list {
+    font-size: 3em;
+}
+
+.grid-container {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 20px;
+     padding: 10px;
+ }
+
+ .car-list .card {
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+   max-width: 300px;
+   margin: auto;
+   text-align: center;
+   font-family: arial;
+   width:100%;
+ }
+
+ .car-list .price {
+   color: grey;
+   font-size: 22px;
+ }
+
+ .car-list .card button {
+   border: none;
+   outline: 0;
+   padding: 12px;
+   color: white;
+   background-color: #000;
+   text-align: center;
+   cursor: pointer;
+   width: 100%;
+   font-size: 18px;
+   margin-top: 1em;
+ }
+
+ .car-list .card button:hover {
+   opacity: 0.7;
+   background: #4CAF50;
+ }
+
+ .car-list h2 {
+    color: #4caf51;
+ }

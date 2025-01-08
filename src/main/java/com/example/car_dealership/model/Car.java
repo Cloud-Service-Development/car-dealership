@@ -23,6 +23,8 @@ public class Car {
     @JoinColumn(name="dealership_id")
     private DealerShip dealership;
 
+    private Car() {}
+
     public Car(
             String brand,
             String model,
