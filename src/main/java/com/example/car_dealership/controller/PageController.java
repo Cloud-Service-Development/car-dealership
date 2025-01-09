@@ -139,7 +139,35 @@ public class PageController {
     }
 
     @GetMapping("/customer/dashboard")
-    public String customerDashboard() {
+    public String customerDashboard(Principal principal, Model model) {
+        String username = principal.getName();
+        Optional<InternalUser> user = userRepository.findByUsername(username);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        model.addAttribute("currentUsername", username);
+        model.addAttribute("role", user.get().getRole());
+
         return "dashboard-customer";
+    }
+
+    @GetMapping("/customer/dashboard/cars")
+    public String customerCars(Principal principal, Model model) {
+        String username = principal.getName();
+        Optional<InternalUser> user = userRepository.findByUsername(username);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        List<Car> cars = carRepository.findAll();
+
+        model.addAttribute("currentUsername", username);
+        model.addAttribute("role", user.get().getRole());
+        model.addAttribute("cars", cars);
+
+        return "cars-list-customer";
     }
 }

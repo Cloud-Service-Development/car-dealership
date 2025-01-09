@@ -180,6 +180,7 @@ footer {
    text-align: center;
    font-family: arial;
    width:100%;
+   height: 100%;
  }
 
  .car-list .price {
@@ -207,4 +208,14 @@ footer {
 
  .car-list h2 {
     color: #4caf51;
+    font-size: 20px;
+ }
+
+ #book-test-drive {
+    margin-top: 0;
+    background: #4caf51;
+ }
+
+ .car-info {
+    height: 51px;
  }
