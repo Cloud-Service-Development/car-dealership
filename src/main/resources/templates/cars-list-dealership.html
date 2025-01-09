@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Car Dealership - Dashboard</title>
+</head>
+<body>
+<header class="dashboard-header">
+    <h1 class="welcome-header">Welcome, <span th:text="${currentUsername}">User</span>!</h1>
+    <p><i class="fa fa-fw fa-user"></i> You are currently log in as a: <span class="role-text" th:text="${role}">Role</span></p>
+</header>
+<nav>
+    <a href="/dealership/dashboard"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a href="/dealership/dashboard/add-car">Add a car</a>
+    <a href="/dealership/dashboard/cars">My Cars</a>
+    <a href="/dealership/dashboard">Search</a>
+    <a href="/logout">Logout</a>
+</nav>
+<div class="dashboard-main-section">
+    <h1>Cars in Your Dealership</h1>
+    <p th:if="${#lists.isEmpty(dealershipCars)}">No cars available in your list.</p>
+    <div class="grid-container car-list">
+        <div class="card" th:each="car : ${dealershipCars}">
+            <div class="card">
+                <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
+                <h2 th:text="${car.brand} + ' ' + ${car.model}"></h2>
+                <p class="price" th:text="'$' + ${car.price}"></p>
+                <p th:text="'Seats: ' + ${car.seats}"></p>
+                <p th:text="'Info: ' + ${car.additionalInfo}"></p>
+                <p><button id="edit-car" th:value="${car.id}" onclick="editCar(event)">Edit</button></p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <p>UOM 2024 - MSC APPLIED INFORMATICS</p>
+</footer>
+</body>
+</html>
+<script>
+    function editCar(event) {
+      const carId = $(event.target).val();
+      window.location.href = `/dealership/dashboard/edit-car?carId=${carId}`;
+    }
+</script>
+

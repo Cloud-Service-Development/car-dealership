@@ -8,29 +8,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cars")
 public class CarController {
 
     @Autowired
-    private CarService carService;
+    private final CarService carService;
 
     public CarController(CarService carService) {
         this.carService = carService;
     }
 
-    @GetMapping
+    @GetMapping("/dashboard/all-cars")
     public List<Car> getAllCars() {
         return carService.getAllCars();
     }
 
-    @PostMapping
-    public Car createCar(@RequestBody Car car) {
-        return carService.createCar(car);
+    @PostMapping("/dealership/dashboard/cars")
+    public List<Car> getDealershipCars(@RequestParam int dealershipId) {
+        return carService.getDealershipCars(dealershipId);
     }
-    @PostMapping("/add")
-    public ResponseEntity<Car> addCar(@RequestParam Long dealershipId,@RequestBody Car car) {
+
+    @PostMapping("/dealership/dashboard/add-car")
+    public ResponseEntity<Car> addCar(@RequestParam int dealershipId, @RequestBody Car car) {
         Car savedCar = carService.addCar(dealershipId, car);
         return ResponseEntity.ok(savedCar);
-   }
+    }
 
+    @PostMapping("/dealership/dashboard/edit-car")
+    public ResponseEntity<String> editCar(@RequestParam int carId, @RequestBody Car car) {
+        Car updatedcar = carService.editCar(carId, car);
+        return ResponseEntity.ok("The car was updated");
+    }
 }

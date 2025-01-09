@@ -2,45 +2,50 @@ package com.example.car_dealership.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
-@Table(name = "dealerships")
-public class DealerShip {
+@Table(name = "customers")
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String firstName;
+    private String lastName;
     private String taxNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private InternalUser user;
 
-    private DealerShip() {}
+    private Customer() {}
 
-    public DealerShip(
-            String name,
+    public Customer(
+            String firstName,
+            String lastName,
             String taxNumber,
             InternalUser user
     ) {
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.taxNumber = taxNumber;
         this.user = user;
     }
 
-    public int getId() {
-        return id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getName() {
-        return name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getTaxNumber() {

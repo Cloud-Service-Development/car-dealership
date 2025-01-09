@@ -1,67 +1,127 @@
 package com.example.car_dealership.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
+@Table(name = "cars")
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
+
     private String brand;
     private String model;
-    @Column(name="fuelType")//χρησιμοποιω το ονομα που εχω στη βαση
     private String fuelType;
-    private int thesis;
-    @Column(name="numberOfSameCars")
-    private int numberOfSameCars;
-    private Double price;
+    private String engine;
+    private int seats;
+    private int price;
+    private String additionalInfo;
+    private int stockQuantity;
 
-    //Σχέση με την κλάση DealerShip
     @ManyToOne
     @JoinColumn(name="dealership_id")
-    private DealerShip dealerShip;
+    private DealerShip dealership;
 
-    //Σχεση με την κλάση Appointment
-    @OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
-    private List<Appointment> appointmentList;
-    //-- Constructors
-    public Car() {}
+    private Car() {}
 
-    public Car(String brand, String model,String fuelType,int thesis,int numberOfSameCars,
-               Double price, DealerShip dealerShip) {
+    public Car(
+            String brand,
+            String model,
+            String fuelType,
+            String engine,
+            int seats,
+            int price,
+            String additionalInfo,
+            int stockQuantity
+    ) {
         this.brand = brand;
         this.model = model;
         this.fuelType = fuelType;
-        this.thesis = thesis;
-        this.numberOfSameCars = numberOfSameCars;
+        this.engine = engine;
+        this.seats = seats;
         this.price = price;
-        this.dealerShip = dealerShip;
+        this.additionalInfo = additionalInfo;
+        this.stockQuantity = stockQuantity;
     }
 
-    // -- Getters & Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getBrand() { return brand; }
-    public void setBrand(String brand) { this.brand = brand; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getModel() { return model; }
-    public void setModel(String model) { this.model = model; }
+    public String getBrand() {
+        return brand;
+    }
 
-    public String getFuelType() { return fuelType; }
-    public void setFuelType(String fuelType) { this.fuelType = fuelType; }
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
-    public int getThesis() { return thesis; }
-    public void setThesis(int thesis) { this.thesis = thesis; }
+    public String getModel() {
+        return model;
+    }
 
-    public int getNumberOfSameCars() { return numberOfSameCars; }
-    public void setNumberOfSameCars(int numberOfSameCars) {this.numberOfSameCars = numberOfSameCars;}
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-    public Double getPrice() { return price; }
-    public void setPrice(Double price) { this.price = price; }
+    public String getFuelType() {
+        return fuelType;
+    }
 
-    public DealerShip getDealerShip() { return dealerShip; }
-    public void setDealerShip(DealerShip dealerShip) { this.dealerShip = dealerShip; }
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public String getEngine() {
+        return engine;
+    }
+
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public DealerShip getDealership() {
+        return dealership;
+    }
+
+    public void setDealership(DealerShip dealership) {
+        this.dealership = dealership;
+    }
 }

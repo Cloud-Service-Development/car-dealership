@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Dealership</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Car Dealership</h1>
+    </header>
+    <main>
+        <div class="login-form">
+            <h2>Login</h2>
+            <form action="/login" method="post">
+                <div class="dialog-row">
+                    <label th:if="${param.error}" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-center redText"></label>
+                </div>
+
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div class="signup-section">
+            <p>Are you a seller and don’t have an account? <a href="/register/dealership">Click here to sign up</a>.</p>
+            <p>Are you a customer and don’t have an account? <a href="/register/customer">Click here to sign up</a>.</p>
+        </div>
+    </main>
+</div>
+</body>
+</html>

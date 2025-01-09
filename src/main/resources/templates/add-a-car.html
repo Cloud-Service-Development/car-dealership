@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Car Dealership - Dashboard</title>
+</head>
+<body>
+<header class="dashboard-header">
+    <h1 class="welcome-header">Welcome, <span th:text="${currentUsername}">User</span>!</h1>
+    <p><i class="fa fa-fw fa-user"></i> You are currently log in as a: <span class="role-text" th:text="${role}">Role</span></p>
+</header>
+<nav>
+    <a href="/dealership/dashboard"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a href="/dealership/dashboard/add-car">Add a car</a>
+    <a href="/dealership/dashboard/cars">My Cars</a>
+    <a href="/dealership/dashboard">Search</a>
+    <a href="/logout">Logout</a>
+</nav>
+<div class="dashboard-main-section">
+    <div class="login-form">
+        <h2 th:text="${car != null ? 'Update the car item' : 'Add a new car item'}"></h2>
+        <form id="add-a-car">
+            <input type="text" hidden="hidden" id="dealership-id" name="dealership-id" th:value="${dealershipId}">
+            <input type="text" hidden="hidden" id="car-id" name="car-id" th:value="${car?.id}" th:if="${car != null}">
+
+            <label for="brand">Brand</label>
+            <input type="text" id="brand" name="brand" placeholder="Enter a brand (f.e. Toyota)" th:value="${car?.brand}" required>
+
+            <label for="model">Model</label>
+            <input type="text" id="model" name="model" placeholder="Enter the model (f.e. Corolla)" th:value="${car?.model}" required>
+
+            <label for="fuel-type">Fuel Type</label>
+            <input type="text" id="fuel-type" name="fuel-type" placeholder="Enter the fuel type (f.e. Gasoline)" th:value="${car?.fuelType}" required>
+
+            <label for="engine">Engine</label>
+            <input type="text" id="engine" name="engine" placeholder="Enter the engine type (f.e. 1.8L V8)" th:value="${car?.engine}" required>
+
+            <label for="seats">Seats</label>
+            <input type="number" id="seats" name="seats" placeholder="Enter the number of seats (f.e. 5)" th:value="${car?.seats}" required>
+
+            <label for="price">Price ($)</label>
+            <input type="number" id="price" name="price" placeholder="Enter the price" th:value="${car?.price}" required>
+
+            <label for="additional-info">Additional information</label>
+            <textarea id="additional-info" name="additional-info" placeholder="Any additional info?" th:text="${car?.additionalInfo}" required></textarea>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" placeholder="Enter the quantity" th:value="${car?.stockQuantity}" required>
+
+            <button type="submit" th:text="${car != null ? 'Update the car' : 'Add the car'}"></button>
+        </form>
+    </div>
+</div>
+<footer>
+    <p>UOM 2024 - MSC APPLIED INFORMATICS</p>
+</footer>
+</body>
+</html>
+
+<script>
+    $(document).ready(function() {
+        $('#add-a-car').submit(function(event) {
+            event.preventDefault();
+
+            var formData = {
+                brand: $('#brand').val(),
+                model: $('#model').val(),
+                fuelType: $('#fuel-type').val(),
+                engine: $('#engine').val(),
+                seats: $('#seats').val(),
+                price: $('#price').val(),
+                additionalInfo: $('#additional-info').val(),
+                stockQuantity: $('#quantity').val(),
+            };
+
+            const dealershipId = $('#dealership-id').val();
+            const carId = $('#car-id').val();
+            const url = carId
+                ? `/dealership/dashboard/edit-car?carId=${carId}`
+                : `/dealership/dashboard/add-car?dealershipId=${dealershipId}`;
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    window.location.href = '/dealership/dashboard/cars';
+                    alert(`Car has been ${carId ? 'updated' : 'added'} successfully!`);
+                },
+                error: function(xhr, status, error) {
+                    window.location.href = '/dealership/dashboard/add-car';
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+</script>

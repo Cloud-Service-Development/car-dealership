@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Car Dealership - Dashboard</title>
+</head>
+<body>
+<header class="dashboard-header">
+    <h1 class="welcome-header">Welcome, <span th:text="${currentUsername}">User</span>!</h1>
+    <p><i class="fa fa-fw fa-user"></i> You are currently log in as a: <span class="role-text" th:text="${role}">Role</span></p>
+</header>
+<nav>
+    <a href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a href="/customer/dashboard/cars">Cars</a>
+    <a href="/">Search</a>
+    <a href="/logout">Logout</a>
+</nav>
+<div class="dashboard-main-section">
+    HERE A LIST OF THE CARS
+</div>
+<footer>
+    <p>UOM 2024 - MSC APPLIED INFORMATICS</p>
+</footer>
+</body>
+</html>
