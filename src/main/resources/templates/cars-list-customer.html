@@ -16,6 +16,7 @@
 <nav>
     <a href="/"><i class="fa fa-fw fa-home"></i> Home</a>
     <a href="/customer/dashboard/cars">Cars</a>
+    <a href="/customer/dashboard/cars">Bookings</a>
     <a href="/">Search</a>
     <a href="/logout">Logout</a>
 </nav>
@@ -24,16 +25,14 @@
     <p th:if="${#lists.isEmpty(cars)}">No cars available in your list.</p>
     <div class="grid-container car-list">
         <div class="card" th:each="car : ${cars}">
-            <div class="card">
-                <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
-                <h2 th:text="${car.brand} + ' ' + ${car.model}"></h2>
-                <p class="price" th:text="'$' + ${car.price}"></p>
-                <p th:text="'Dealership: ' + ${car.dealership.name}"></p>
-                <p th:text="'Seats: ' + ${car.seats}"></p>
-                <p th:text="'Info: ' + ${car.additionalInfo}" class="car-info"></p>
-                <p><button id="buy-car" th:value="${car.id}" onclick="buyCar(event)">Buy this car</button></p>
-                <p><button id="book-test-drive" th:value="${car.id}" onclick="testDrive(event)">Book a test drive</button></p>
-            </div>
+            <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
+            <h2 th:text="${car.brand} + ' ' + ${car.model}"></h2>
+            <p class="price" th:text="'$' + ${car.price}"></p>
+            <p th:text="'Dealership: ' + ${car.dealership.name}"></p>
+            <p th:text="'Seats: ' + ${car.seats}"></p>
+            <p th:text="'Info: ' + ${car.additionalInfo}" class="car-info"></p>
+            <p><button id="buy-car" th:value="${car.id}" onclick="buyCar(event)">Buy this car</button></p>
+            <p><button id="book-test-drive" th:value="${car.id}" onclick="testDrive(event)">Book a test drive</button></p>
         </div>
     </div>
 </div>
@@ -45,12 +44,12 @@
 <script>
     function buyCar(event) {
       const carId = $(event.target).val();
-      window.location.href = `/customer/dashboard/buy-car?carId=${carId}`;
+      window.location.href = `/customer/dashboard/cars/buy-car?carId=${carId}`;
     }
 
     function testDrive(event) {
       const carId = $(event.target).val();
-      window.location.href = `/customer/dashboard/test-drive?carId=${carId}`;
+      window.location.href = `/customer/dashboard/cars/test-drive?carId=${carId}`;
     }
 </script>
 

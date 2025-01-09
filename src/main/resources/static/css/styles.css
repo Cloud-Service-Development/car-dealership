@@ -219,3 +219,7 @@ footer {
  .car-info {
     height: 51px;
  }
+
+ .car-info-list {
+    margin: 1.2em;
+ }

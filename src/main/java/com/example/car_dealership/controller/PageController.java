@@ -170,4 +170,21 @@ public class PageController {
 
         return "cars-list-customer";
     }
+
+    @GetMapping("/customer/dashboard/cars/test-drive")
+    public String testDrive(@RequestParam int carId, Model model, Principal principal) {
+        Optional<Car> car = carRepository.findById(carId);
+        String username = principal.getName();
+        Optional<InternalUser> user = userRepository.findByUsername(username);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        model.addAttribute("currentUsername", username);
+        model.addAttribute("role", user.get().getRole());
+        model.addAttribute("car", car.orElse(null));
+
+        return "test-drive-customer";
+    }
 }
