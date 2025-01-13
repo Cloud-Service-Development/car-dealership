@@ -4,7 +4,7 @@ import com.example.car_dealership.model.Car;
 import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.repository.CarRepository;
 import com.example.car_dealership.repository.DealershipRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,17 +13,16 @@ import java.util.Optional;
 @Service
 public class CarService {
 
-    private CarRepository carRepository;
-    private DealershipRepository dealershipRepository;
+    private final CarRepository carRepository;
+    private final DealershipRepository dealershipRepository;
 
-    @Autowired
     public CarService(CarRepository carRepository, DealershipRepository dealershipRepository) {
         this.carRepository = carRepository;
         this.dealershipRepository = dealershipRepository;
     }
 
     public List<Car> getAllCars() {
-        return carRepository.findAll();
+        return carRepository.findAllByOrderByIdDesc();
     }
 
     public Car addCar(int dealershipId, Car car) {
@@ -38,7 +37,7 @@ public class CarService {
         Optional<Car> carOptional = carRepository.findById(carId);
 
         if (carOptional.isEmpty()) {
-            throw new RuntimeException("Car not found");
+            throw new EntityNotFoundException("Car with id " + carId + " not found");
         }
 
         Car existingCar = carOptional.get();
@@ -58,6 +57,6 @@ public class CarService {
     }
 
     public List<Car> getDealershipCars(int dealershipId) {
-        return carRepository.findByDealershipId(dealershipId);
+        return carRepository.findByDealershipIdOrderByIdDesc(dealershipId);
     }
 }

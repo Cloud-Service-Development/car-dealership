@@ -21,17 +21,57 @@
     <a href="/logout">Logout</a>
 </nav>
 <div class="dashboard-main-section">
-    <h1>Cars in Your Dealership</h1>
+    <h2 class="book-test-drive-header">Cars in Your Dealership</h2>
     <p th:if="${#lists.isEmpty(dealershipCars)}">No cars available in your list.</p>
+
+    <div class="filters-container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search by brand, model..." />
+            <button onclick="applySearch()">Search</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <label for="price-range">Price Range:</label>
+            <select id="price-range">
+                <option value="">Select</option>
+                <option value="0-20000">$0 - $20,000</option>
+                <option value="20001-40000">$20,001 - $40,000</option>
+                <option value="40001-60000">$40,001 - $60,000</option>
+            </select>
+
+            <label for="seats">Seats:</label>
+            <select id="seats">
+                <option value="">Select</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+            </select>
+
+            <label for="fuel-type">Fuel Type:</label>
+            <select id="fuel-type">
+                <option value="">Select</option>
+                <option value="gasoline">Gasoline</option>
+                <option value="diesel">Diesel</option>
+                <option value="electric">Electric</option>
+                <option value="hybrid">Hybrid</option>
+            </select>
+
+            <button onclick="applyFilters()">Apply Filters</button>
+        </div>
+    </div>
+
     <div class="grid-container car-list">
         <div class="card" th:each="car : ${dealershipCars}">
             <div class="card">
                 <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
                 <h2 th:text="${car.brand} + ' ' + ${car.model}"></h2>
                 <p class="price" th:text="'$' + ${car.price}"></p>
-                <p th:text="'Seats: ' + ${car.seats}"></p>
+                <p class="seats" th:text="'Seats: ' + ${car.seats}"></p>
                 <p th:text="'Info: ' + ${car.additionalInfo}" class="car-info"></p>
-                <p><button id="edit-car" th:value="${car.id}" onclick="editCar(event)">Edit</button></p>
+                <p><button id="edit-car" th:value="${car.id}" onclick="editCar(event)"><i class="fa fa-fw fa-edit"></i>Edit</button></p>
             </div>
         </div>
     </div>
@@ -45,6 +85,47 @@
     function editCar(event) {
       const carId = $(event.target).val();
       window.location.href = `/dealership/dashboard/edit-car?carId=${carId}`;
+    }
+
+    function applySearch() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const carCards = document.querySelectorAll('.card');
+
+        carCards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = text.includes(query) ? '' : 'none';
+        });
+    }
+
+    function applyFilters() {
+        const priceRange = document.getElementById('price-range').value;
+        const seats = document.getElementById('seats').value;
+        const fuelType = document.getElementById('fuel-type').value;
+
+        const carCards = document.querySelectorAll('.card');
+
+        carCards.forEach(card => {
+            const price = parseInt(card.querySelector('.price').innerText.replace('$', ''));
+            const carSeats = parseInt(card.querySelector('.seats').innerText.replace('Seats: ', ''));
+            const carFuelType = card.getAttribute('data-fuel-type'); // Add a custom attribute in HTML for fuel type
+
+            let isVisible = true;
+
+            if (priceRange) {
+                const [min, max] = priceRange.split('-').map(Number);
+                isVisible = isVisible && price >= min && price <= max;
+            }
+
+            if (seats) {
+                isVisible = isVisible && carSeats === parseInt(seats);
+            }
+
+            if (fuelType) {
+                isVisible = isVisible && carFuelType === fuelType;
+            }
+
+            card.style.display = isVisible ? '' : 'none';
+        });
     }
 </script>
 

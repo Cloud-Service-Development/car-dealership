@@ -4,4 +4,5 @@ import com.example.car_dealership.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+    Customer findByUserId(int userId);
 }

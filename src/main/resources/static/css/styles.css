@@ -45,13 +45,13 @@ header h1 {
     color: #333;
 }
 
-.login-form label {
+.login-form label, #buy-car-form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-.login-form input, .login-form textarea {
+.login-form input, .login-form textarea, .login-form select, #buy-car-form input{
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -75,7 +75,6 @@ header h1 {
     background: #45a049;
 }
 
-/* Signup Section */
 .signup-section {
     text-align: center;
     margin-top: 20px;
@@ -157,9 +156,9 @@ footer {
 }
 
 .dashboard-main-section {
-    padding: 20px;
     overflow: scroll;
-    height: 40em;
+    margin-bottom: 3em;
+    padding: 1em 5em 3em 5em;
 }
 
 .car-icon-list {
@@ -168,14 +167,12 @@ footer {
 
 .grid-container {
      display: grid;
-     grid-template-columns: repeat(3, 1fr);
+     grid-template-columns: repeat(4, 1fr);
      gap: 20px;
-     padding: 10px;
  }
 
  .car-list .card {
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-   max-width: 300px;
    margin: auto;
    text-align: center;
    font-family: arial;
@@ -221,5 +218,102 @@ footer {
  }
 
  .car-info-list {
-    margin: 1.2em;
+    margin-left: 1.2em;
  }
+
+ #test-drive-date {
+    width: 100%;
+ }
+
+ .book-test-drive-button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #4caf51;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    margin-top: 1em;
+ }
+
+ .book-test-drive-button:hover {
+    opacity: 0.7;
+    background: #4CAF50;
+  }
+
+  .car-details-table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .car-details-table td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .car-details-table tr:nth-child(even) {
+    background-color: #4caf5185;
+  }
+
+  .test-drive-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .car-model-span {
+    color: #4caf51;
+  }
+
+  .book-test-drive-header {
+    margin-bottom: 1em;
+  }
+
+  .bookings {
+    padding: 1em;
+  }
+
+  .created-by {
+    text-align: center;
+    font-size: 12px;
+    color: #3333337a;
+  }
+
+
+
+  .filters-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 1em;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-bar {
+      flex: 1;
+      margin-right: 1em;
+  }
+
+  .search-bar input {
+      width: 80%;
+      padding: 0.5em;
+      margin-right: 0.5em;
+  }
+
+  .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+  }
+
+  .filters label,
+  .filters select {
+      margin-right: 0.5em;
+  }

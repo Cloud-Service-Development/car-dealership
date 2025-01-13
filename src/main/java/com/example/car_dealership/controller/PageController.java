@@ -1,34 +1,56 @@
 package com.example.car_dealership.controller;
 
-import com.example.car_dealership.model.Car;
-import com.example.car_dealership.model.DealerShip;
-import com.example.car_dealership.model.InternalUser;
-import com.example.car_dealership.repository.CarRepository;
-import com.example.car_dealership.repository.DealershipRepository;
-import com.example.car_dealership.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.example.car_dealership.model.*;
+import com.example.car_dealership.service.PageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
 public class PageController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final PageService pageService;
 
-    @Autowired
-    private DealershipRepository dealershipRepository;
+    public PageController(PageService pageService) {
+        this.pageService = pageService;
+    }
 
-    @Autowired
-    private CarRepository carRepository;
+    @ModelAttribute
+    public void addCommonAttributes(Model model, Principal principal) {
+        if (principal != null) {
+            Optional<InternalUser> user = pageService.getCurrentUser(principal);
+
+
+            model.addAttribute("currentUsername", principal.getName());
+
+            user.ifPresent(internalUser -> model.addAttribute("role", internalUser.getRole()));
+
+            if (user.isPresent() && "dealership".equals(user.get().getRole())) {
+                DealerShip dealership = pageService.getDealershipByUserId(user.get().getId());
+                List<Car> cars = pageService.getDealershipCars(dealership.getId());
+                model.addAttribute("dealershipName", dealership.getName());
+                model.addAttribute("dealershipId", dealership.getId());
+                model.addAttribute("dealershipCars", cars);
+            }
+
+            if (user.isPresent() && "customer".equals((user.get().getRole()))) {
+                Customer customer = pageService.getCustomerByUserId(user.get().getId());
+                List<Car> cars = pageService.getAllCarsForCustomer();
+                List<TestDriveBooking> testDriveBookings = pageService.getAllTestDriveBookingsForCustomer(customer.getId());
+                List<Purchase> purchases = pageService.getAllPurchasesForCustomer(customer.getId());
+                model.addAttribute("customerId", customer.getId());
+                model.addAttribute("cars", cars);
+                model.addAttribute("testDriveBookings", testDriveBookings);
+                model.addAttribute("purchases", purchases);
+            }
+        }
+    }
 
     @GetMapping("/login")
     public String login() {
@@ -47,144 +69,68 @@ public class PageController {
 
     @GetMapping({"/", ""})
     public String home(Principal principal) {
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        if (Objects.equals(user.get().getRole(), "customer")) {
-            return "redirect:/customer/dashboard";
-        }
-
-        if (Objects.equals(user.get().getRole(), "dealership")) {
-            return "redirect:/dealership/dashboard";
-        }
-
-        return "";
+        return pageService.getHomeTemplate(principal);
     }
 
     @GetMapping("/dealership/dashboard")
-    public String dealershipDashboard(Principal principal, Model model) {
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        model.addAttribute("currentUsername", username);
-        model.addAttribute("role", user.get().getRole());
-
+    public String dealershipDashboard() {
         return "dashboard-dealership";
     }
 
     @GetMapping("/dealership/dashboard/add-car")
-    public String addCar(Principal principal, Model model) {
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        DealerShip dealership = dealershipRepository.findByUserId(user.get().getId());
-
-        model.addAttribute("currentUsername", username);
-        model.addAttribute("role", user.get().getRole());
-        model.addAttribute("dealershipId", dealership.getId());
-
+    public String addCar() {
         return "add-a-car";
     }
 
     @GetMapping("/dealership/dashboard/cars")
-    public String cars(Principal principal, Model model) {
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        DealerShip dealership = dealershipRepository.findByUserId(user.get().getId());
-        List<Car> cars = carRepository.findByDealershipId(dealership.getId());
-
-        model.addAttribute("currentUsername", username);
-        model.addAttribute("role", user.get().getRole());
-        model.addAttribute("dealershipId", dealership.getId());
-        model.addAttribute("dealershipCars", cars);
-
+    public String cars() {
         return "cars-list-dealership";
     }
 
     @GetMapping("/dealership/dashboard/edit-car")
-    public String editCar(@RequestParam int carId, Model model, Principal principal) {
-        Optional<Car> car = carRepository.findById(carId);
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        DealerShip dealership = dealershipRepository.findByUserId(user.get().getId());
-
-        model.addAttribute("currentUsername", username);
-        model.addAttribute("role", user.get().getRole());
-        model.addAttribute("dealershipId", dealership.getId());
+    public String editCar(
+            @RequestParam int carId,
+            Model model
+    ) {
+        Optional<Car> car = pageService.getCarById(carId);
         model.addAttribute("car", car.orElse(null));
-
         return "add-a-car";
     }
 
     @GetMapping("/customer/dashboard")
-    public String customerDashboard(Principal principal, Model model) {
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        model.addAttribute("currentUsername", username);
-        model.addAttribute("role", user.get().getRole());
-
+    public String customerDashboard() {
         return "dashboard-customer";
     }
 
     @GetMapping("/customer/dashboard/cars")
-    public String customerCars(Principal principal, Model model) {
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        List<Car> cars = carRepository.findAll();
-
-        model.addAttribute("currentUsername", username);
-        model.addAttribute("role", user.get().getRole());
-        model.addAttribute("cars", cars);
-
+    public String customerCars() {
         return "cars-list-customer";
     }
 
     @GetMapping("/customer/dashboard/cars/test-drive")
-    public String testDrive(@RequestParam int carId, Model model, Principal principal) {
-        Optional<Car> car = carRepository.findById(carId);
-        String username = principal.getName();
-        Optional<InternalUser> user = userRepository.findByUsername(username);
-
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        model.addAttribute("currentUsername", username);
-        model.addAttribute("role", user.get().getRole());
+    public String testDrive(@RequestParam int carId, Model model) {
+        Optional<Car> car = pageService.getCarById(carId);
         model.addAttribute("car", car.orElse(null));
-
         return "test-drive-customer";
+    }
+
+    @GetMapping("/customer/dashboard/test-drive-bookings")
+    public String testDriveBookings() {
+        return "test-drive-bookings-list-customer";
+    }
+
+    @GetMapping("/customer/dashboard/cars/purchase")
+    public String purchaseCar(
+            @RequestParam int carId,
+            Model model
+    ) {
+        Optional<Car> car = pageService.getCarById(carId);
+        model.addAttribute("car", car.orElse(null));
+        return "purchase-car-customer";
+    }
+
+    @GetMapping("/customer/dashboard/purchases")
+    public String purchases() {
+        return "purchases-list-customer";
     }
 }

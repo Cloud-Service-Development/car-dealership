@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <title>Car Dealership - Dashboard</title>
 </head>
@@ -20,10 +21,17 @@
     <a href="/logout">Logout</a>
 </nav>
 <div class="dashboard-main-section">
-    Hello customer!
-    Your details are:
-    frcewr
-    cfrerw
+    <h2 class="book-test-drive-header">Your purchases</h2>
+    <p th:if="${#lists.isEmpty(purchases)}">Not any purchases have been made yet.</p>
+    <div class="grid-container car-list">
+        <div class="card bookings" th:each="purchase : ${purchases}">
+            <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
+            <h2 th:text="${purchase.car.brand} + ' ' + ${purchase.car.model}"></h2>
+            <p th:text="'Date: ' + ${purchase.purchaseDate}"></p>
+            <p th:text="'Price: $' + ${purchase.amount}"></p>
+            <p th:text="'Dealership: ' + ${purchase.car.dealership.name}"></p>
+        </div>
+    </div>
 </div>
 <footer>
     <p>UOM 2024 - MSC APPLIED INFORMATICS</p>
