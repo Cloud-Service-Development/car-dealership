@@ -22,13 +22,13 @@ public class PageController {
     }
 
     @ModelAttribute
-    public void addCommonAttributes(Model model, Principal principal) {
+    public void addCommonAttributes(
+            Model model,
+            Principal principal
+    ) {
         if (principal != null) {
             Optional<InternalUser> user = pageService.getCurrentUser(principal);
-
-
             model.addAttribute("currentUsername", principal.getName());
-
             user.ifPresent(internalUser -> model.addAttribute("role", internalUser.getRole()));
 
             if (user.isPresent() && "dealership".equals(user.get().getRole())) {
@@ -37,6 +37,7 @@ public class PageController {
                 model.addAttribute("dealershipName", dealership.getName());
                 model.addAttribute("dealershipId", dealership.getId());
                 model.addAttribute("dealershipCars", cars);
+                model.addAttribute("dealershipEntity", dealership);
             }
 
             if (user.isPresent() && "customer".equals((user.get().getRole()))) {
@@ -48,6 +49,7 @@ public class PageController {
                 model.addAttribute("cars", cars);
                 model.addAttribute("testDriveBookings", testDriveBookings);
                 model.addAttribute("purchases", purchases);
+                model.addAttribute("customerEntity", customer);
             }
         }
     }
@@ -108,7 +110,10 @@ public class PageController {
     }
 
     @GetMapping("/customer/dashboard/cars/test-drive")
-    public String testDrive(@RequestParam int carId, Model model) {
+    public String testDrive(
+            @RequestParam int carId,
+            Model model
+    ) {
         Optional<Car> car = pageService.getCarById(carId);
         model.addAttribute("car", car.orElse(null));
         return "test-drive-customer";

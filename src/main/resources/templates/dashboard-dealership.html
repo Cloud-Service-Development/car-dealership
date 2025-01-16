@@ -19,10 +19,15 @@
     <a href="/logout">Logout</a>
 </nav>
 <div class="dashboard-main-section">
-    <h2>About Me</h2>
-    <p>This is a paragraph about me. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque nisl ut sapien interdum, nec ullamcorper velit dapibus. Sed ac vestibulum libero, nec tempor felis.</p>
-    <h2>Services</h2>
-    <p>These are the services I offer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque nisl ut sapien interdum, nec ullamcorper velit dapibus. Sed ac vestibulum libero, nec tempor felis.</p>
+    <div class="personal-info-container">
+        <h2><i class="fa fa-fw fa-user"></i> Personal Information</h2>
+        <p class="personal-info-text">Here you can see your personal details</p>
+        <input class="personal-info-input-text" type="text" placeholder="Name" name="name" disabled th:value="${dealershipEntity.name}">
+        <input class="personal-info-input-text" type="text" placeholder="Tax Number" name="tax-number" disabled th:value="${dealershipEntity.taxNumber}">
+        <input class="personal-info-input-text" type="text" placeholder="Username" name="username" disabled th:value="${dealershipEntity.user.username}">
+        <input class="personal-info-input-text" type="text" placeholder="Email" name="email" disabled th:value="${dealershipEntity.user.email}">
+        <input class="personal-info-input-text capital-text" type="text" placeholder="Role" name="role" disabled th:value="${dealershipEntity.user.role}">
+    </div>
 </div>
 <footer>
     <p>UOM 2024 - MSC APPLIED INFORMATICS</p>

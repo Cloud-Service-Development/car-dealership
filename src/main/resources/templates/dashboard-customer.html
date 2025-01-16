@@ -20,10 +20,16 @@
     <a href="/logout">Logout</a>
 </nav>
 <div class="dashboard-main-section">
-    Hello customer!
-    Your details are:
-    frcewr
-    cfrerw
+    <div class="personal-info-container">
+        <h2><i class="fa fa-fw fa-user"></i> Personal Information</h2>
+        <p class="personal-info-text">Here you can see your personal details</p>
+        <input class="personal-info-input-text" type="text" placeholder="First Name" name="first-name" disabled th:value="${customerEntity.firstName}">
+        <input class="personal-info-input-text" type="text" placeholder="Last Name" name="last-name" disabled th:value="${customerEntity.lastName}">
+        <input class="personal-info-input-text" type="text" placeholder="Tax Number" name="tax-number" disabled th:value="${customerEntity.taxNumber}">
+        <input class="personal-info-input-text" type="text" placeholder="Username" name="username" disabled th:value="${customerEntity.user.username}">
+        <input class="personal-info-input-text" type="text" placeholder="Email" name="email" disabled th:value="${customerEntity.user.email}">
+        <input class="personal-info-input-text capital-text" type="text" placeholder="Role" name="role" disabled th:value="${customerEntity.user.role}">
+    </div>
 </div>
 <footer>
     <p>UOM 2024 - MSC APPLIED INFORMATICS</p>

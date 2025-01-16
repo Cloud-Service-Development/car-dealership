@@ -22,6 +22,16 @@ body {
     border-radius: 8px;
 }
 
+.personal-info-container {
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
 /* Header */
 header h1 {
     text-align: center;
@@ -51,7 +61,7 @@ header h1 {
     font-weight: bold;
 }
 
-.login-form input, .login-form textarea, .login-form select, #buy-car-form input{
+.login-form input, .login-form textarea, .login-form select, #buy-car-form input, .personal-info-container input{
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -214,7 +224,7 @@ footer {
  }
 
  .car-info {
-    height: 51px;
+    height: 58px;
  }
 
  .car-info-list {
@@ -302,9 +312,11 @@ footer {
   }
 
   .search-bar input {
-      width: 80%;
+      width: 70%;
       padding: 0.5em;
       margin-right: 0.5em;
+      border: 1px solid #33333330;
+      border-radius: 3px;
   }
 
   .filters {
@@ -313,7 +325,32 @@ footer {
       gap: 1em;
   }
 
-  .filters label,
   .filters select {
       margin-right: 0.5em;
+      border: 1px solid #33333330;
+      border-radius: 3px;
+  }
+
+  .filters label {
+    margin-right: 0.5em;
+  }
+
+  .personal-info-text {
+    margin-bottom: 1em;
+  }
+
+  .personal-info-input-text {
+    color: #00000061;
+  }
+
+  .capital-text {
+    text-transform: capitalize;
+  }
+
+  .filters-container button {
+    height: 100%;
+    padding: 6px;
+    background: #333333;
+    border-radius: 3px;
+    color: white;
   }
