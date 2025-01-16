@@ -1,0 +1,23 @@
+<div th:replace="header :: header"></div>
+<div class="dashboard-main-section">
+    <h2 class="book-test-drive-header">Cars in Your Dealership</h2>
+    <div th:replace="search :: search"></div>
+    <div><p th:if="${#lists.isEmpty(dealershipCars)}">No cars available in your list.</p></div>
+    <div class="grid-container car-list">
+        <div class="card" th:each="car : ${dealershipCars}">
+            <div class="card">
+                <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
+                <h2 th:text="${car.brand} + ' ' + ${car.model}"></h2>
+                <p class="price" th:text="'$' + ${car.price}"></p>
+                <p class="seats" th:text="'Seats: ' + ${car.seats}"></p>
+                <p th:text="'Info: ' + ${car.additionalInfo}"></p>
+                <p class="fuel-type car-info" th:text="'Fuel Type: ' + ${car.fuelType}"></p>
+                <p><button id="edit-car" th:value="${car.id}" onclick="editCar(event)"><i class="fa fa-fw fa-edit"></i>Edit</button></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>
+

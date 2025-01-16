@@ -1,0 +1,55 @@
+<div th:replace="header :: header"></div>
+<div class="dashboard-main-section">
+    <h2 class="book-test-drive-header">Buy the <span th:text="${car.brand} + ' ' + ${car.model}" class="car-model-span"></span></h2>
+    <div class="test-drive-grid-container">
+        <div>
+            <table class="car-details-table">
+                <tr>
+                    <td>Brand</td>
+                    <td th:text="${car.brand}"></td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td th:text="${car.model}"></td>
+                </tr>
+                <tr>
+                    <td>Fuel Type</td>
+                    <td th:text="${car.fuelType}"></td>
+                </tr>
+                <tr>
+                    <td>Engine</td>
+                    <td th:text="${car.engine}"></td>
+                </tr>
+                <tr>
+                    <td>Seats</td>
+                    <td th:text="${car.seats}"></td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td th:text="'$' + ${car.price}"></td>
+                </tr>
+                <tr>
+                    <td>Information</td>
+                    <td th:text="${car.additionalInfo}"></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <form id="buy-car-form">
+                <input type="text" hidden="hidden" id="car-id" name="car-id" th:value="${car?.id}">
+                <input type="text" hidden="hidden" id="customer-id" name="customer-id" th:value="${customerId}">
+
+                <label for="preparation-fee">Preparation fee: </label>
+                <input type="text" disabled id="preparation-fee" name="preparation-fee" value="$500">
+
+                <label for="car-total-cost">Total price: </label>
+                <input type="text" id="car-total-cost" disabled name="car-total-cost" th:value="'$' + ${car.price + 500}">
+
+                <button class="book-test-drive-button" type="submit">BUY THIS CAR</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

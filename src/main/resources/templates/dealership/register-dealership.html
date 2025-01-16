@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Dealership</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/script.js}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -44,38 +45,3 @@
 </div>
 </body>
 </html>
-<script>
-    $(document).ready(function() {
-        $('#dealership-signup').submit(function(event) {
-            event.preventDefault();
-
-            if ($('#password').val() !== $('#repeat-password').val()) {
-                alert('Your passwords do not match.');
-                return;
-            }
-
-            var formData = {
-                username: $('#username').val(),
-                name: $('#name').val(),
-                taxNumber: $('#tax-number').val(),
-                email: $('#email').val(),
-                password: $('#password').val(),
-            };
-
-            $.ajax({
-                url: '/register/dealership',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function(response) {
-                    window.location.href = '/login';
-                    alert('Registration successful!');
-                },
-                error: function(xhr, status, error) {
-                    window.location.href = '/login';
-                    alert('An error occurred. Please try again.');
-                }
-            });
-        });
-    });
-</script>

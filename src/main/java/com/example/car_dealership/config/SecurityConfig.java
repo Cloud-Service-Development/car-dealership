@@ -56,7 +56,8 @@ public class SecurityConfig {
                     registry.requestMatchers(
                             "/register/customer",
                             "/register/dealership",
-                            "/css/**"
+                            "/css/**",
+                            "/js/**"
                     ).permitAll();
                     // Security scope for the role "dealership"
                     registry.requestMatchers(

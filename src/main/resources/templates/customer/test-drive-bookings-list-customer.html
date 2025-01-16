@@ -1,0 +1,17 @@
+<div th:replace="header :: header"></div>
+<div class="dashboard-main-section">
+    <h2 class="book-test-drive-header">Your test drive reservations</h2>
+    <p th:if="${#lists.isEmpty(testDriveBookings)}">Not any reservations have been made yet.</p>
+    <div class="grid-container car-list">
+        <div class="card bookings" th:each="booking : ${testDriveBookings}">
+            <p class="car-icon-list"><i class="fa fa-fw fa-calendar"></i></p>
+            <h2 th:text="${booking.car.brand} + ' ' + ${booking.car.model}"></h2>
+            <p th:text="'Date: ' + ${booking.date}"></p>
+            <p th:text="'Time: ' + ${booking.time}"></p>
+            <p th:text="'Dealership: ' + ${booking.car.dealership.name}"></p>
+        </div>
+    </div>
+</div>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

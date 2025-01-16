@@ -1,0 +1,17 @@
+<div th:replace="header :: header"></div>
+<div class="dashboard-main-section">
+    <h2 class="book-test-drive-header">Your purchases</h2>
+    <p th:if="${#lists.isEmpty(purchases)}">Not any purchases have been made yet.</p>
+    <div class="grid-container car-list">
+        <div class="card bookings" th:each="purchase : ${purchases}">
+            <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
+            <h2 th:text="${purchase.car.brand} + ' ' + ${purchase.car.model}"></h2>
+            <p th:text="'Date: ' + ${purchase.purchaseDate}"></p>
+            <p th:text="'Price: $' + ${purchase.amount}"></p>
+            <p th:text="'Dealership: ' + ${purchase.car.dealership.name}"></p>
+        </div>
+    </div>
+</div>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

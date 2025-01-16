@@ -2,7 +2,6 @@ package com.example.car_dealership.controller;
 
 import com.example.car_dealership.model.Car;
 import com.example.car_dealership.service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
 @RestController
 public class CarController {
 
-    @Autowired
     private final CarService carService;
 
     public CarController(CarService carService) {
@@ -34,8 +32,8 @@ public class CarController {
     }
 
     @PostMapping("/dealership/dashboard/edit-car")
-    public ResponseEntity<String> editCar(@RequestParam int carId, @RequestBody Car car) {
+    public ResponseEntity<Car> editCar(@RequestParam int carId, @RequestBody Car car) {
         Car updatedcar = carService.editCar(carId, car);
-        return ResponseEntity.ok("The car was updated");
+        return ResponseEntity.ok(updatedcar);
     }
 }

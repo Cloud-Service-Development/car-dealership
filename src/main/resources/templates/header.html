@@ -6,35 +6,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/script.js}"></script>
     <title>Car Dealership - Dashboard</title>
 </head>
-<body>
 <header class="dashboard-header">
     <h1 class="welcome-header">Welcome, <span th:text="${currentUsername}">User</span>!</h1>
     <p><i class="fa fa-fw fa-user"></i> You are currently log in as a: <span class="role-text" th:text="${role}">Role</span></p>
 </header>
-<nav>
+<nav th:if="${role === 'customer'}">
     <a href="/"><i class="fa fa-fw fa-home"></i> Home</a>
     <a href="/customer/dashboard/cars">Cars</a>
     <a href="/customer/dashboard/test-drive-bookings">Bookings</a>
     <a href="/customer/dashboard/purchases">Purchases</a>
     <a href="/logout">Logout</a>
 </nav>
-<div class="dashboard-main-section">
-    <h2 class="book-test-drive-header">Your purchases</h2>
-    <p th:if="${#lists.isEmpty(purchases)}">Not any purchases have been made yet.</p>
-    <div class="grid-container car-list">
-        <div class="card bookings" th:each="purchase : ${purchases}">
-            <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
-            <h2 th:text="${purchase.car.brand} + ' ' + ${purchase.car.model}"></h2>
-            <p th:text="'Date: ' + ${purchase.purchaseDate}"></p>
-            <p th:text="'Price: $' + ${purchase.amount}"></p>
-            <p th:text="'Dealership: ' + ${purchase.car.dealership.name}"></p>
-        </div>
-    </div>
-</div>
-<footer>
-    <p>UOM 2024 - MSC APPLIED INFORMATICS</p>
-</footer>
-</body>
-</html>
+<nav th:if="${role === 'dealership'}">
+    <a href="/dealership/dashboard"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a href="/dealership/dashboard/add-car">Add a car</a>
+    <a href="/dealership/dashboard/cars">My Cars</a>
+    <a href="/logout">Logout</a>
+</nav>

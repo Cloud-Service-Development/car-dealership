@@ -1,0 +1,38 @@
+<div th:replace="header :: header"></div>
+<div class="dashboard-main-section">
+    <h2 class="book-test-drive-header">All the cars</h2>
+    <p th:if="${#lists.isEmpty(cars)}">No cars available in your list.</p>
+    <div th:replace="search :: search"></div>
+    <div class="grid-container car-list">
+        <div class="card" th:each="car : ${cars}">
+            <p class="car-icon-list"><i class="fa fa-fw fa-car"></i></p>
+            <h2 th:text="${car.brand} + ' ' + ${car.model}"></h2>
+            <p class="price" th:text="'$' + ${car.price}"></p>
+            <p th:text="'Dealership: ' + ${car.dealership.name}"></p>
+            <p class="seats" th:text="'Seats: ' + ${car.seats}"></p>
+            <p th:text="'Info: ' + ${car.additionalInfo}"></p>
+            <p class="fuel-type car-info" th:text="'Fuel Type: ' + ${car.fuelType}"></p>
+            <p>
+                <button
+                        id="buy-car"
+                        th:attr="data-id=${car.id}, data-stock=${car.stockQuantity}"
+                        onclick="buyCar(event)"
+                >
+                    <i class="fa fa-fw fa-shopping-cart"></i> Buy this car
+                </button>
+            </p>
+            <p>
+                <button
+                        id="book-test-drive"
+                        th:attr="data-id=${car.id}, data-stock=${car.stockQuantity}"
+                        onclick="testDrive(event)"
+                >
+                    <i class="fa fa-fw fa-calendar"></i> Book a test drive
+                </button>
+            </p>
+        </div>
+    </div>
+</div>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>
