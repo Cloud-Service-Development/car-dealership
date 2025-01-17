@@ -61,12 +61,12 @@ public class PageController {
 
     @GetMapping("/register/customer")
     public String registerCustomer() {
-        return "register-customer";
+        return "customer/register-customer";
     }
 
     @GetMapping("/register/dealership")
     public String registerDealership() {
-        return "register-dealership";
+        return "dealership/register-dealership";
     }
 
     @GetMapping({"/", ""})
@@ -76,17 +76,17 @@ public class PageController {
 
     @GetMapping("/dealership/dashboard")
     public String dealershipDashboard() {
-        return "dashboard-dealership";
+        return "dealership/dashboard-dealership";
     }
 
     @GetMapping("/dealership/dashboard/add-car")
     public String addCar() {
-        return "add-a-car";
+        return "dealership/add-a-car";
     }
 
     @GetMapping("/dealership/dashboard/cars")
     public String cars() {
-        return "cars-list-dealership";
+        return "dealership/cars-list-dealership";
     }
 
     @GetMapping("/dealership/dashboard/edit-car")
@@ -96,17 +96,17 @@ public class PageController {
     ) {
         Optional<Car> car = pageService.getCarById(carId);
         model.addAttribute("car", car.orElse(null));
-        return "add-a-car";
+        return "dealership/add-a-car";
     }
 
     @GetMapping("/customer/dashboard")
     public String customerDashboard() {
-        return "dashboard-customer";
+        return "customer/dashboard-customer";
     }
 
     @GetMapping("/customer/dashboard/cars")
     public String customerCars() {
-        return "cars-list-customer";
+        return "customer/cars-list-customer";
     }
 
     @GetMapping("/customer/dashboard/cars/test-drive")
@@ -116,12 +116,12 @@ public class PageController {
     ) {
         Optional<Car> car = pageService.getCarById(carId);
         model.addAttribute("car", car.orElse(null));
-        return "test-drive-customer";
+        return "customer/test-drive-customer";
     }
 
     @GetMapping("/customer/dashboard/test-drive-bookings")
     public String testDriveBookings() {
-        return "test-drive-bookings-list-customer";
+        return "customer/test-drive-bookings-list-customer";
     }
 
     @GetMapping("/customer/dashboard/cars/purchase")
@@ -131,11 +131,11 @@ public class PageController {
     ) {
         Optional<Car> car = pageService.getCarById(carId);
         model.addAttribute("car", car.orElse(null));
-        return "purchase-car-customer";
+        return "customer/purchase-car-customer";
     }
 
     @GetMapping("/customer/dashboard/purchases")
     public String purchases() {
-        return "purchases-list-customer";
+        return "customer/purchases-list-customer";
     }
 }
