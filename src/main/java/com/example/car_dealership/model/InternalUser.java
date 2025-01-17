@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class InternalUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
     private String email;
