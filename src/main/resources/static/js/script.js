@@ -37,7 +37,6 @@ function applyFilters() {
         }
 
         if (fuelType) {
-            console.log(fuelType);
             isVisible = isVisible && carFuelType.toLowerCase() === fuelType;
         }
 
