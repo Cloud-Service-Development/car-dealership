@@ -228,4 +228,4 @@ $(document).ready(function() {
             }
         });
     });
-}
+});
