@@ -1,28 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <script th:src="@{/js/script.js}"></script>
-    <title>Car Dealership - Dashboard</title>
-</head>
 <header class="dashboard-header">
     <h1 class="welcome-header">Welcome, <span th:text="${currentUsername}">User</span>!</h1>
     <p><i class="fa fa-fw fa-user"></i> You are currently log in as a: <span class="role-text" th:text="${role}">Role</span></p>
 </header>
-<nav th:if="${role === 'customer'}">
-    <a href="/"><i class="fa fa-fw fa-home"></i> Home</a>
-    <a href="/customer/dashboard/cars">Cars</a>
-    <a href="/customer/dashboard/test-drive-bookings">Bookings</a>
-    <a href="/customer/dashboard/purchases">Purchases</a>
-    <a href="/logout">Logout</a>
-</nav>
-<nav th:if="${role === 'dealership'}">
-    <a href="/dealership/dashboard"><i class="fa fa-fw fa-home"></i> Home</a>
-    <a href="/dealership/dashboard/add-car">Add a car</a>
-    <a href="/dealership/dashboard/cars">My Cars</a>
-    <a href="/logout">Logout</a>
-</nav>
