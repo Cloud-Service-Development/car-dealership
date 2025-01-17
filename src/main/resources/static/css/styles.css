@@ -12,6 +12,22 @@ body {
     line-height: 1.6;
 }
 
+.public-body {
+    background: url('/images/car-dealership-public.webp') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.public-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255 255 255 / 88%);
+    z-index: -1;
+}
+
 .container {
     width: 100%;
     max-width: 800px;

@@ -57,7 +57,8 @@ public class SecurityConfig {
                             "/register/customer",
                             "/register/dealership",
                             "/css/**",
-                            "/js/**"
+                            "/js/**",
+                            "/images/car-dealership-public.webp"
                     ).permitAll();
                     // Security scope for the role "dealership"
                     registry.requestMatchers(
