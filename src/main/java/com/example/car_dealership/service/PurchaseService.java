@@ -6,25 +6,23 @@ import com.example.car_dealership.model.Car;
 import com.example.car_dealership.model.Customer;
 import com.example.car_dealership.model.Purchase;
 import com.example.car_dealership.repository.CarRepository;
-import com.example.car_dealership.repository.CustomerRepository;
 import com.example.car_dealership.repository.PurchaseRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
-    private final CustomerRepository customerRepository;
     private final CarRepository carRepository;
+    private final EntityFinderService entityFinderService;
 
     public PurchaseService(
             PurchaseRepository purchaseRepository,
-            CustomerRepository customerRepository,
-            CarRepository carRepository
+            CarRepository carRepository,
+            EntityFinderService entityFinderService
     ) {
         this.purchaseRepository = purchaseRepository;
-        this.customerRepository = customerRepository;
         this.carRepository = carRepository;
+        this.entityFinderService = entityFinderService;
     }
 
     public void addPurchase(
@@ -32,11 +30,8 @@ public class PurchaseService {
             int customerId,
             int carId
     ) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
-
-        Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+        Customer customer = entityFinderService.findCustomerById(customerId);
+        Car car = entityFinderService.findCarById(carId);
 
         Purchase purchase = PurchaseMapper.toEntity(purchaseDTO);
         purchase.setCustomer(customer);

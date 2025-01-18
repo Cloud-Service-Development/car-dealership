@@ -6,21 +6,22 @@ import com.example.car_dealership.mapper.CarMapper;
 import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.repository.CarRepository;
 import com.example.car_dealership.repository.DealershipRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CarService {
 
     private final CarRepository carRepository;
-    private final DealershipRepository dealershipRepository;
+    private final EntityFinderService entityFinderService;
 
-    public CarService(CarRepository carRepository, DealershipRepository dealershipRepository) {
+    public CarService(
+            CarRepository carRepository,
+            EntityFinderService entityFinderService
+    ) {
         this.carRepository = carRepository;
-        this.dealershipRepository = dealershipRepository;
+        this.entityFinderService = entityFinderService;
     }
 
     public List<Car> getAllCars() {
@@ -31,9 +32,7 @@ public class CarService {
             int dealershipId,
             DealershipCreateUpdateCarRequest carDTO
     ) {
-        DealerShip dealership = dealershipRepository.findById(dealershipId)
-                .orElseThrow(() -> new EntityNotFoundException("Dealership not found"));
-
+        DealerShip dealership = entityFinderService.findDealershipById(dealershipId);
         Car car = CarMapper.toEntity(carDTO);
         car.setDealership(dealership);
         carRepository.save(car);
@@ -43,8 +42,7 @@ public class CarService {
             int carId,
             DealershipCreateUpdateCarRequest carDTO
     ) {
-        Car existingCar = carRepository.findById(carId)
-                .orElseThrow(() -> new EntityNotFoundException("Car with id " + carId + " not found"));
+        Car existingCar = entityFinderService.findCarById(carId);
 
         existingCar.setBrand(carDTO.getBrand());
         existingCar.setModel(carDTO.getModel());
