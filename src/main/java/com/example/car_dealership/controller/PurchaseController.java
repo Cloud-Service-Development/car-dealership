@@ -2,14 +2,17 @@ package com.example.car_dealership.controller;
 
 import com.example.car_dealership.dto.CustomerCreateUpdatePurchaseRequest;
 import com.example.car_dealership.service.PurchaseService;
+import com.example.car_dealership.util.ValidationUtils;
 import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.stream.Collectors;
 
@@ -31,13 +34,8 @@ public class PurchaseController {
             @RequestParam int carId,
             BindingResult bindingResult
     ) {
-        if (customerId <= 0) {
-            return ResponseEntity.badRequest().body("Invalid customerId. It must be a positive number.");
-        }
-
-        if (carId <= 0) {
-            return ResponseEntity.badRequest().body("Invalid carId. It must be a positive number.");
-        }
+        ValidationUtils.validateId(customerId, "customerId");
+        ValidationUtils.validateId(carId, "carId");
 
         if (bindingResult.hasErrors()) {
             String errorMessage = bindingResult.getFieldErrors()
@@ -45,7 +43,10 @@ public class PurchaseController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(", "));
 
-            return ResponseEntity.badRequest().body(errorMessage);
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    errorMessage
+            );
         }
 
         try {
@@ -55,7 +56,10 @@ public class PurchaseController {
                     carId
             );
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    e.getMessage()
+            );
         }
 
         return ResponseEntity.ok().body("The purchase has been made!");
