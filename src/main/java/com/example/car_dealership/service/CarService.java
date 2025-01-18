@@ -5,7 +5,6 @@ import com.example.car_dealership.model.Car;
 import com.example.car_dealership.mapper.CarMapper;
 import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.repository.CarRepository;
-import com.example.car_dealership.repository.DealershipRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
