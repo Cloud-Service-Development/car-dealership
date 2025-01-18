@@ -1,6 +1,7 @@
 package com.example.car_dealership.controller;
 
 import com.example.car_dealership.dto.CustomerCreateUpdateTestDriveRequest;
+import com.example.car_dealership.model.TestDriveBooking;
 import com.example.car_dealership.service.TestDriveBookingService;
 import com.example.car_dealership.util.ValidationUtils;
 import jakarta.validation.Valid;
@@ -8,12 +9,10 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -62,6 +61,23 @@ public class TestDriveBookingController {
             );
         }
 
-        return ResponseEntity.ok().body("The purchase has been made!");
+        return ResponseEntity.ok().body("The booking has been made!");
+    }
+
+    @GetMapping("/customer/dashboard/cars/{carId}/test-drive/booked-dates")
+    public ResponseEntity<List<TestDriveBooking>> getTestDriveBookingsForCar(
+            @PathVariable int carId
+    ) {
+        ValidationUtils.validateId(carId, "carId");
+
+        try {
+            List<TestDriveBooking> bookings = testDriveBookingService.getTestDriveBookingsForCar(carId);
+            return ResponseEntity.ok().body(bookings);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    e.getMessage()
+            );
+        }
     }
 }

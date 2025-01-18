@@ -247,8 +247,9 @@ footer {
     margin-left: 1.2em;
  }
 
- #test-drive-date {
+ #test-drive-date, #test-drive-time {
     width: 100%;
+    margin-bottom: 10px;
  }
 
  .book-test-drive-button {

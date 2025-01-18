@@ -51,8 +51,10 @@
             <form id="book-a-test-drive-form">
                 <input type="text" hidden="hidden" id="car-id" name="car-id" th:value="${car?.id}">
                 <input type="text" hidden="hidden" id="customer-id" name="customer-id" th:value="${customerId}">
-                <label for="test-drive-date">Please select the date & time you want to book the test drive for:</label>
-                <input type="datetime-local" id="test-drive-date" name="test-drive-date">
+                <label for="test-drive-date">Please select the date for your test drive:</label>
+                <input type="date" id="test-drive-date" name="test-drive-date" min="2025-01-18">
+                <label for="test-drive-time">Please select the time for your test drive (please note that only working hours between 8:00-18:00 are available):</label>
+                <select id="test-drive-time" name="test-drive-time"></select>
                 <button class="book-test-drive-button" type="submit">MAKE THE BOOKING</button>
             </form>
         </div>

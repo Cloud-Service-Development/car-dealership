@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TestDriveBookingRepository extends JpaRepository<TestDriveBooking, Integer> {
     List<TestDriveBooking> findByCustomerIdOrderByIdDesc(int customerId);
+    List<TestDriveBooking> findByCarId(int carId);
 }

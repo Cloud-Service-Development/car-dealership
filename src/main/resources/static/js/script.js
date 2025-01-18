@@ -59,13 +59,50 @@ function buyCar(event) {
 function testDrive(event) {
     const button = $(event.target);
     const carId = button.data('id');
-    const stockQuantity = button.data('stock');
+    window.location.href = `/customer/dashboard/cars/test-drive?carId=${carId}`;
+}
 
-    if (stockQuantity >= 1) {
-        window.location.href = `/customer/dashboard/cars/test-drive?carId=${carId}`;
-    } else {
-        alert("There is not any available car of this model for the moment. We will notify you when it is available again for a test drive.");
-    }
+function setupTimeSlots(bookedSlots) {
+    var $timeSelect = $("#test-drive-time");
+
+    var workingHours = [
+        "08:00", "09:00", "10:00", "11:00", "12:00",
+        "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"
+    ];
+
+    var selectedDate = $("#test-drive-date").val();
+    $timeSelect.empty();
+
+    var now = new Date();
+    var currentDate = now.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    var currentTime = now.toTimeString().split(' ')[0].substring(0, 5);
+
+    workingHours.forEach(function(hour) {
+        var isBooked = bookedSlots.some(function(booking) {
+            return booking.date === selectedDate && booking.time === hour;
+        });
+
+        // Check if the selected date is today and the hour is in the past
+        if (selectedDate === currentDate && hour <= currentTime) {
+            return; // Skip adding this time slot
+        }
+
+        if (!isBooked) {
+            $timeSelect.append($('<option>').val(hour).text(hour));
+        }
+    });
+}
+
+function setCurrentDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+    $('#test-drive-date').val(today);
+    $('#test-drive-date').attr('min', today);
 }
 
 $(document).ready(function() {
@@ -172,11 +209,24 @@ $(document).ready(function() {
 
     $('#book-a-test-drive-form').submit(function(event) {
          event.preventDefault();
-         const dateTime = $('#test-drive-date').val();
+         const date = $('#test-drive-date').val();
+         const time = $('#test-drive-time').val();
+
+         if (!date || !time) {
+             alert('Please select both date and time.');
+             return;
+         }
+
+         var selectedDateTime = new Date(date + 'T' + time);
+         var now = new Date();
+
+         if (selectedDateTime <= now) {
+             alert('Please select a date and time in the future.');
+             return;
+         }
+
          const carId = $('#car-id').val();
          const customerId = $('#customer-id').val();
-
-         const [date, time] = dateTime.split('T');
 
          var formData = {
              date: date,
@@ -232,4 +282,28 @@ $(document).ready(function() {
             }
         });
     });
+
+    if ($("#car-id").length > 0 && $("#car-id").val() !== "" && $('#test-drive-date')) {
+        var carId = $("#car-id").val();
+        var bookings = null;
+
+        $.ajax({
+            url: '/customer/dashboard/cars/' + carId + '/test-drive/booked-dates',
+            type: 'GET',
+            success: function(response) {
+                setupTimeSlots(response);
+                bookings = response;
+            },
+            error: function(xhr, status, error) {
+                const messages = xhr.responseText;
+                alert(messages);
+            }
+        });
+
+        setCurrentDate();
+
+        $('#test-drive-date').on('change', function() {
+            setupTimeSlots(bookings);
+        });
+    }
 });
