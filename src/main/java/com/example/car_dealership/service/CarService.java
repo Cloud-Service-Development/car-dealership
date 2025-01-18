@@ -1,6 +1,8 @@
 package com.example.car_dealership.service;
 
+import com.example.car_dealership.dto.DealershipCreateUpdateCarRequest;
 import com.example.car_dealership.model.Car;
+import com.example.car_dealership.mapper.CarMapper;
 import com.example.car_dealership.model.DealerShip;
 import com.example.car_dealership.repository.CarRepository;
 import com.example.car_dealership.repository.DealershipRepository;
@@ -25,35 +27,35 @@ public class CarService {
         return carRepository.findAllByOrderByIdDesc();
     }
 
-    public Car addCar(int dealershipId, Car car) {
+    public void addCar(
+            int dealershipId,
+            DealershipCreateUpdateCarRequest carDTO
+    ) {
         DealerShip dealership = dealershipRepository.findById(dealershipId)
-                .orElseThrow(() -> new IllegalArgumentException("Dealership not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Dealership not found"));
 
+        Car car = CarMapper.toEntity(carDTO);
         car.setDealership(dealership);
-        return carRepository.save(car);
+        carRepository.save(car);
     }
 
-    public Car editCar(int carId, Car car) {
-        Optional<Car> carOptional = carRepository.findById(carId);
+    public void editCar(
+            int carId,
+            DealershipCreateUpdateCarRequest carDTO
+    ) {
+        Car existingCar = carRepository.findById(carId)
+                .orElseThrow(() -> new EntityNotFoundException("Car with id " + carId + " not found"));
 
-        if (carOptional.isEmpty()) {
-            throw new EntityNotFoundException("Car with id " + carId + " not found");
-        }
-
-        Car existingCar = carOptional.get();
-
-        existingCar.setBrand(car.getBrand());
-        existingCar.setModel(car.getModel());
-        existingCar.setFuelType(car.getFuelType());
-        existingCar.setEngine(car.getEngine());
-        existingCar.setSeats(car.getSeats());
-        existingCar.setPrice(car.getPrice());
-        existingCar.setAdditionalInfo(car.getAdditionalInfo());
-        existingCar.setStockQuantity(car.getStockQuantity());
+        existingCar.setBrand(carDTO.getBrand());
+        existingCar.setModel(carDTO.getModel());
+        existingCar.setFuelType(carDTO.getFuelType());
+        existingCar.setEngine(carDTO.getEngine());
+        existingCar.setSeats(carDTO.getSeats());
+        existingCar.setPrice(carDTO.getPrice());
+        existingCar.setAdditionalInfo(carDTO.getAdditionalInfo());
+        existingCar.setStockQuantity(carDTO.getStockQuantity());
 
         carRepository.save(existingCar);
-
-        return existingCar;
     }
 
     public List<Car> getDealershipCars(int dealershipId) {

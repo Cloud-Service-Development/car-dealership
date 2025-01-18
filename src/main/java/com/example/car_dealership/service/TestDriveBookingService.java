@@ -1,11 +1,15 @@
 package com.example.car_dealership.service;
 
+import com.example.car_dealership.dto.CustomerCreateUpdateTestDriveRequest;
+import com.example.car_dealership.mapper.TestDriveBookingMapper;
 import com.example.car_dealership.model.Car;
 import com.example.car_dealership.model.Customer;
 import com.example.car_dealership.model.TestDriveBooking;
 import com.example.car_dealership.repository.CarRepository;
 import com.example.car_dealership.repository.CustomerRepository;
 import com.example.car_dealership.repository.TestDriveBookingRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,18 +29,19 @@ public class TestDriveBookingService {
         this.carRepository = carRepository;
     }
 
-    public TestDriveBooking addTestDriveBooking(
-            TestDriveBooking testDriveBooking,
+    public void addTestDriveBooking(
+            CustomerCreateUpdateTestDriveRequest testDriveBookingDTO,
             int customerId,
             int carId
     ) {
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-
-        testDriveBooking.setCustomer(customer);
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
 
         Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new IllegalArgumentException("Car not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+
+        TestDriveBooking testDriveBooking = TestDriveBookingMapper.toEntity(testDriveBookingDTO);
+        testDriveBooking.setCustomer(customer);
 
         int currentStockQuantity = car.getStockQuantity();
         car.setStockQuantity(currentStockQuantity - 1);
@@ -44,6 +49,6 @@ public class TestDriveBookingService {
 
         testDriveBooking.setCar(car);
 
-        return testDriveBookingRepository.save(testDriveBooking);
+        testDriveBookingRepository.save(testDriveBooking);
     }
 }

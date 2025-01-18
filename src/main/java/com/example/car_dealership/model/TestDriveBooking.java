@@ -2,6 +2,8 @@ package com.example.car_dealership.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "test_drive_bookings")
 public class TestDriveBooking {
@@ -17,13 +19,13 @@ public class TestDriveBooking {
     @JoinColumn(name="car_id")
     private Car car;
 
-    private String date;
+    private LocalDate date;
     private String time;
 
     protected TestDriveBooking() {}
 
     public TestDriveBooking(
-            String date,
+            LocalDate date,
             String time
     ) {
         this.date = date;
@@ -55,11 +57,11 @@ public class TestDriveBooking {
         this.car = car;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

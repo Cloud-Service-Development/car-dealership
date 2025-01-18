@@ -93,11 +93,12 @@ $(document).ready(function() {
             data: JSON.stringify(formData),
             success: function(response) {
                 window.location.href = '/login';
-                alert('Registration successful!');
+                alert(response);
             },
             error: function(xhr, status, error) {
-                window.location.href = '/login';
-                alert('An error occurred. Please try again.');
+                const messages = xhr.responseText.split(', ');
+                const alertMessage = messages.join('\n');
+                alert(alertMessage);
             }
         });
     });
@@ -129,11 +130,12 @@ $(document).ready(function() {
             data: JSON.stringify(formData),
             success: function(response) {
                 window.location.href = '/dealership/dashboard/cars';
-                alert(`Car has been ${carId ? 'updated' : 'added'} successfully!`);
+                alert(response);
             },
             error: function(xhr, status, error) {
-                window.location.href = '/dealership/dashboard/add-car';
-                alert('An error occurred. Please try again.');
+                const messages = xhr.responseText.split(', ');
+                const alertMessage = messages.join('\n');
+                alert(alertMessage);
             }
         });
     });
@@ -158,11 +160,12 @@ $(document).ready(function() {
              data: JSON.stringify(formData),
              success: function(response) {
                  window.location.href = '/customer/dashboard/purchases';
-                 alert(`A purchase has be made!`);
+                 alert(response);
              },
              error: function(xhr, status, error) {
-                 window.location.href = '/customer/dashboard/cars';
-                 alert('An error occurred. Please try again.');
+                 const messages = xhr.responseText.split(', ');
+                 const alertMessage = messages.join('\n');
+                 alert(alertMessage);
              }
          });
     });
@@ -187,11 +190,12 @@ $(document).ready(function() {
              data: JSON.stringify(formData),
              success: function(response) {
                  window.location.href = '/customer/dashboard/test-drive-bookings';
-                 alert(`Reservation has be made!`);
+                 alert(response);
              },
              error: function(xhr, status, error) {
-                 window.location.href = '/customer/dashboard/cars';
-                 alert('An error occurred. Please try again.');
+                 const messages = xhr.responseText.split(', ');
+                 const alertMessage = messages.join('\n');
+                 alert(alertMessage);
              }
          });
     });
@@ -219,11 +223,12 @@ $(document).ready(function() {
             data: JSON.stringify(formData),
             success: function(response) {
                 window.location.href = '/login';
-                alert('Registration successful!');
+                alert(response);
             },
             error: function(xhr, status, error) {
-                window.location.href = '/login';
-                alert('An error occurred. Please try again.');
+                const messages = xhr.responseText.split(', ');
+                const alertMessage = messages.join('\n');
+                alert(alertMessage);
             }
         });
     });
