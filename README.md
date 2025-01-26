@@ -1,120 +1,23 @@
-ReadMe για την Εφαρμογή Αντιπροσωπείας Αυτοκινήτων
+# Car dealership
 
-Περιγραφή Έργου
+A project the has been created for the needs of the course "Cloud Service Development".
 
-Η παρούσα εφαρμογή αποτελεί μια αρχική υλοποίηση ενός συστήματος αντιπροσωπείας αυτοκινήτων με χρήση Spring Boot και κληρονομικότητα στις κλάσεις User, Citizen και Dealership. Περιλαμβάνει μόνο μια βασική λειτουργία: το endpoint /test για επιβεβαίωση της λειτουργίας της εφαρμογής.
+## Installation
 
-Τεχνολογίες
-	•	Java 17
-	•	Spring Boot 3.4.0
-	•	Spring Data JPA
-	•	MySQL
-	•	Hibernate
+1. Install XAMPP, so that you can use the mysql local server.
+2. Use the file car_dealership.sql that is included in this repository & create all the required database tables.
+3. Install [Maven](https://maven.apache.org/install.html)
+4. Build the app: `mvn clean install`
+5. Finally, run the app:
+```bash
+  mvn spring-boot:run
+```
+6. Find the app in this url: http://localhost:8080/login
 
-Δομή Βάσης Δεδομένων
+## Documentation
 
-Η βάση δεδομένων χρησιμοποιεί τη στρατηγική Single Table Inheritance για την κλάση User, με τις Citizen και Dealership να είναι υποκλάσεις.
+Information regarding the app (use cases & code) can be found [here](#).
 
-Σχήμα   Πίνακα    User:
+_University of Macedonia, 2025_
 
-Όνομα  Στήλης	Τύπος Δεδομένων	Περιγραφή
-id	        BIGINT	       Πρωτεύον Κλειδί
-username        VARCHAR	       Όνομα χρήστη
-password        VARCHAR	       Κρυπτογραφημένος κωδικός
-email	        VARCHAR	       Email χρήστη
-dtype	        VARCHAR	       Διακριτής τύπος για τις υποκλάσεις
-location	VARCHAR	       Τοποθεσία (ειδικό για Dealership)
-contact_info	VARCHAR	       Πληροφορίες επικοινωνίας
-name	        VARCHAR	        Όνομα αντιπροσωπείας
-
-Δομή Κλάσεων
-1.	User (Βασική Κλάση)
-
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype")
-public abstract class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String username;
-    private String password;
-    private String email;
-
-    // Getters και Setters
-}
-
-2.	Citizen (Υποκλάση)
-
-@Entity
-@DiscriminatorValue("Citizen")
-public class Citizen extends User {
-    // Πρόσθετα πεδία για τον Citizen
-}
-
-3.	Dealership (Υποκλάση)
-
-@Entity
-@DiscriminatorValue("Dealership")
-public class Dealership extends User {
-    private String location;
-    private String contactInfo;
-    private String name;
-
-    // Getters και Setters
-}
-
-Λειτουργικότητα
-
-Endpoint: /test
-	•	HTTP Μέθοδος: GET
-	•	Περιγραφή: Ένα απλό endpoint για να επιβεβαιωθεί ότι η εφαρμογή λειτουργεί σωστά.
-	•	Απάντηση: "Hello, World!"
-
-Controller:
-
-@RestController
-@RequestMapping("/test")
-public class TestController {
-    @GetMapping
-    public String test() {
-        return "Hello, World!";
-    }
-}
-
-Βήματα Εκτέλεσης
-1.	Κλωνοποίηση του Αποθετηρίου:
-
-git clone <repository-url>
-cd car-dealership
-
-
-2.	Ρύθμιση της Βάσης Δεδομένων:
-	•	Δημιουργήστε μια βάση δεδομένων MySQL με όνομα car_dealership.
-	•	Προσθέστε τα παρακάτω στο αρχείο application.properties:
-
-spring.datasource.url=jdbc:mysql://localhost:3306/car_dealership
-spring.datasource.username=root
-spring.datasource.password=
-spring.jpa.hibernate.ddl-auto=update
-
-
-3.	Εκτέλεση της Εφαρμογής:
-
-mvn spring-boot:run
-
-
-4.	Δοκιμή της Εφαρμογής:
-	•	Ανοίξτε τον browser ή το Postman και κάντε GET request στο:
-
-http://localhost:8080/users/test
-
-Μελλοντικές Βελτιώσεις
-	•	Επέκταση λειτουργικότητας, όπως:
-	•	Εγγραφή Citizen και Dealership.
-	•	Προσθήκη αυτοκινήτων.
-	•	Αναζήτηση αυτοκινήτων.
-	•	Κράτηση test drives.
-
-Το ReadMe αυτό εξηγεί την τρέχουσα κατάσταση της εφαρμογής και χρησιμεύει ως βάση για μελλοντικές επεκτάσεις.
+_Authors: Theodora Nouni, Eleni Sidiraki, Anastasia Pourliaka_
