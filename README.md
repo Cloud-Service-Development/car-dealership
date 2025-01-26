@@ -18,7 +18,7 @@ A project the has been created for the needs of the course "Cloud Service Develo
 
 ## Documentation
 
-Information regarding the app (use cases & code) can be found [here](#).
+Information regarding the app (use cases & code) can be found [here](https://docs.google.com/document/d/1XZqizkbpjwaBC6QmWjabEnfHRGw965rDL_PhIZ7iYVc/edit?tab=t.0).
 
 _University of Macedonia, 2025_
 
