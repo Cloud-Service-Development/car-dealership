@@ -20,6 +20,8 @@ A project the has been created for the needs of the course "Cloud Service Develo
 
 Information regarding the app (use cases & code) can be found [here](https://docs.google.com/document/d/1XZqizkbpjwaBC6QmWjabEnfHRGw965rDL_PhIZ7iYVc/edit?tab=t.0).
 
+Find the YouTube video [here](https://www.youtube.com/watch?v=QafjuOPVR2U).
+
 _University of Macedonia, 2025_
 
 _Authors: Theodora Nouni, Eleni Sidiraki, Anastasia Pourliaka_
