@@ -14,6 +14,8 @@ A project the has been created for the needs of the course "Cloud Service Develo
 ```
 6. Find the app in this url: http://localhost:8080/login
 
+![img.png](car-dealership-login.png)
+
 ## Documentation
 
 Information regarding the app (use cases & code) can be found [here](#).
