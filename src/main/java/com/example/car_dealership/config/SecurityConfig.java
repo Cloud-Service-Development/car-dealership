@@ -52,13 +52,21 @@ public class SecurityConfig {
                     httpForm.loginPage("/login").permitAll();
                     httpForm.successHandler(loginSuccessHandler);
                 })
+                .logout(logout -> logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(
+                        (request, response, authException) -> response.sendError(401, "Unauthorized: Please login first.")
+                ))
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(
                             "/register/customer",
                             "/register/dealership",
                             "/css/**",
                             "/js/**",
-                            "/images/**"
+                            "/images/**",
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**"
                     ).permitAll();
                     // Security scope for the role "dealership"
                     registry.requestMatchers(

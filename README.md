@@ -20,6 +20,9 @@ A project the has been created for the needs of the course "Cloud Service Develo
 
 Information regarding the app (use cases & code) can be found [here](https://docs.google.com/document/d/1XZqizkbpjwaBC6QmWjabEnfHRGw965rDL_PhIZ7iYVc/edit?tab=t.0).
 
+Find the OPEN API documentation of the api here: http://localhost:8080/swagger-ui/index.html
+Note: In order to use the requests from the swagger, you need to create an account & login.
+
 Find the YouTube video [here](https://www.youtube.com/watch?v=QafjuOPVR2U).
 
 _University of Macedonia, 2025_

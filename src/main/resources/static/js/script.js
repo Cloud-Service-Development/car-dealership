@@ -157,8 +157,8 @@ $(document).ready(function() {
         const dealershipId = $('#dealership-id').val();
         const carId = $('#car-id').val();
         const url = carId
-            ? `/dealership/dashboard/edit-car?carId=${carId}`
-            : `/dealership/dashboard/add-car?dealershipId=${dealershipId}`;
+            ? `/dealership/dashboard/edit-car/${carId}`
+            : `/dealership/${dealershipId}/dashboard/add-car`;
 
         $.ajax({
             url: url,
@@ -170,7 +170,7 @@ $(document).ready(function() {
                 alert(response);
             },
             error: function(xhr, status, error) {
-                const messages = xhr.responseText.split(', ');
+                const messages = xhr.responseJSON.message.split(', ');
                 const alertMessage = messages.join('\n');
                 alert(alertMessage);
             }
@@ -191,7 +191,7 @@ $(document).ready(function() {
          };
 
          $.ajax({
-             url: '/customer/dashboard/cars/purchase?carId=' + carId + '&customerId=' + customerId,
+             url: '/customer/' + customerId + '/dashboard/cars/' + carId + '/purchase',
              type: 'POST',
              contentType: 'application/json',
              data: JSON.stringify(formData),
@@ -200,7 +200,7 @@ $(document).ready(function() {
                  alert(response);
              },
              error: function(xhr, status, error) {
-                 const messages = xhr.responseText.split(', ');
+                 const messages = xhr.responseJSON.message.split(', ');
                  const alertMessage = messages.join('\n');
                  alert(alertMessage);
              }
@@ -234,7 +234,7 @@ $(document).ready(function() {
          };
 
          $.ajax({
-             url: '/customer/dashboard/cars/test-drive?carId=' + carId + '&customerId=' + customerId,
+             url: '/customer/' + customerId + '/dashboard/cars/' + carId + '/test-drive',
              type: 'POST',
              contentType: 'application/json',
              data: JSON.stringify(formData),
